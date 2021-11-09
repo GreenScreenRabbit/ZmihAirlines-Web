@@ -1,21 +1,12 @@
 import { connect } from 'react-redux'
-import "./selectFlights.css"
-
+import './selectFlights.css'
 
 const SelectFlights = () => {
-return(
-  <>
-    <div>
-           
-    </div>
-  </>
-  )
+    return (
+        <>
+            <div className="selectFlights-body">44444444444</div>
+        </>
+    )
 }
 
-
-export default connect(null,null)(SelectFlights)
-
-
-
-
-
+export default connect(null, null)(SelectFlights)

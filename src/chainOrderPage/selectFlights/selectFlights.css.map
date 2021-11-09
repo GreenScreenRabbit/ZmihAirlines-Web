@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AACK,AAAD,mBAAM,CAAA;EAEF,MAAM,EAAE,KAAK;EAEb,KAAK,EAAE,KAAK;EACZ,gBAAgB,EAAE,MAAM;CAC3B",
+    "sources": [
+        "selectFlights.scss"
+    ],
+    "names": [],
+    "file": "selectFlights.css"
+}

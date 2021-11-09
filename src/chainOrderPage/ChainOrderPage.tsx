@@ -1,15 +1,19 @@
 import { Col, Row } from 'react-bootstrap'
 import { connect, RootStateOrAny } from 'react-redux'
-import { Link, Routes } from 'react-router-dom'
+import { Link, Route, Routes } from 'react-router-dom'
 import { actions } from '../actions and const/actions'
 import './chainOrderPage.css'
+import SelectFlights from './selectFlights/SelectFlights'
 
 type PropsType = {
     setChainPageCorrect: (arg0: number) => void
     chainPagesCorreсt: boolean[]
 }
 
-const ChainOrderPage = (props: PropsType) => {
+const ChainOrderPage = (props: PropsType, { match }: any) => {
+    console.log('match')
+    console.log(match)
+
     const leftBarPageDivChangeColor = (bol: boolean) => {
         let forRetrunStyle: string[] = []
         if (bol == true) {
@@ -45,7 +49,27 @@ const ChainOrderPage = (props: PropsType) => {
                             {/* <Route path="/" element={<StartPage />} />
                             <Route path="/informationPage" element={<InformationPage />} />
                             <Route path="/chainOrderPage" element={<ChainOrderPage />} /> */}
-                        </Routes>
+
+                            {/* <Route path="/selectFlights" 
+                            element={<SelectFlights />}  */}
+
+                            <Route path="/selectFlights" element={<SelectFlights />} />
+                        </Routes> 
+
+                        {/* <Link to="./selectFlights"> */}
+
+                        <Link to="selectFlights">
+                            <div
+                                style={{
+                                    left: '200px',
+                                    position: 'absolute',
+                                    height: '100px',
+                                    width: '100px',
+                                    backgroundColor: 'green'
+                                }}>
+                                200
+                            </div>
+                        </Link>
 
                         <Link to="/">
                             <div
