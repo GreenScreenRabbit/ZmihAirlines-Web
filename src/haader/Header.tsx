@@ -12,6 +12,13 @@ type PropsType = {
 const Header = (props: PropsType) => {
     const [isOpenDropMenu, setIsOpenDropMenu] = useState(false)
 
+    const url = window.location.href
+
+    console.log('url')
+    console.log(url)
+
+    
+
     return (
         <>
             <div className="header">

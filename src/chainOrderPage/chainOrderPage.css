@@ -17,4 +17,12 @@
   border: #7474f5 solid 4px;
   background-color: white;
 }
+
+.leftBarPageDiv {
+  position: relative;
+  background-color: #edeaf8;
+  width: 100%;
+  height: 40px;
+  border: #c6c2d6 dotted 1px;
+}
 /*# sourceMappingURL=chainOrderPage.css.map */
