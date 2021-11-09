@@ -1,0 +1,39 @@
+.header {
+  top: 0px;
+  z-index: 2;
+  position: -webkit-sticky;
+  position: sticky;
+  background-color: #3e3efa;
+  width: 100%;
+  height: 120px;
+}
+
+.header-chooseLanguage {
+  position: relative;
+  font-size: 26px;
+  font-family: sans-serif;
+  color: seashell;
+  height: 60px;
+  width: 180px;
+  background-color: #121279;
+}
+
+.header-chooseLanguage-dropItemsContainer {
+  top: calc(50% - 30px);
+  position: relative;
+  background-color: red;
+  height: auto;
+  left: 85%;
+  width: 180px;
+}
+
+.header-chooseLanguage-item {
+  position: relative;
+  font-family: sans-serif;
+  color: seashell;
+  font-size: 26px;
+  height: 60px;
+  width: 180px;
+  background-color: salmon;
+}
+/*# sourceMappingURL=header.css.map */

@@ -1,0 +1,34 @@
+.header {
+    top: 0px;
+    z-index: 2;
+    position: sticky;
+    background-color: rgb(62, 62, 250);
+    width: 100%;
+    height: 120px;
+    &-chooseLanguage {
+        position: relative;
+        font-size: 26px;
+        font-family: sans-serif;
+        color: seashell;
+        height: 60px;
+        width: 180px;
+        background-color: rgb(18, 18, 121);
+        &-dropItemsContainer {
+            top: calc(50% - 30px);
+            position: relative;
+            background-color: red;
+            height: auto;
+            left: 85%;
+            width: 180px;
+        }
+        &-item {
+            position: relative;
+            font-family: sans-serif;
+            color: seashell;
+            font-size: 26px;
+            height: 60px;
+            width: 180px;
+            background-color: salmon;
+        }
+    }
+}

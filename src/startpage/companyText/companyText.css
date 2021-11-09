@@ -1,0 +1,40 @@
+.companyText-container {
+  position: relative;
+  height: 150px;
+  width: 100%;
+}
+
+.companyText-textContainer {
+  position: absolute;
+  left: 10%;
+  height: 100%;
+  width: 80%;
+  background-color: #ebebeb;
+}
+
+.companyText-iconPosition {
+  position: relative;
+  left: 150px;
+  height: 100%;
+  width: 164px;
+  display: inline-block;
+}
+
+.companyText-someIconContainer {
+  position: relative;
+  left: calc(50% - 175px);
+  height: 150px;
+  width: 225px;
+  background-color: yellow;
+}
+
+.companyText-text {
+  position: absolute;
+  font-size: 48px;
+  display: inline-block;
+  left: 0px;
+  top: 0px;
+  width: 150px;
+  height: 150px;
+}
+/*# sourceMappingURL=companyText.css.map */
