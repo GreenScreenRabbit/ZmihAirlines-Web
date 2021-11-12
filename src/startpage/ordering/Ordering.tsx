@@ -17,7 +17,7 @@ const Ordering = () => {
                                 <div className="ordering-selectDeparture"></div>
                                 <div className="ordering-person"></div>
                                 <div className="ordering-selectDate">
-                                    <Link to="/chainOrderPage">
+                                    <Link to="/chainOrderPage/selectFlights">
                                         <div
                                             style={{
                                                 position: 'absolute',

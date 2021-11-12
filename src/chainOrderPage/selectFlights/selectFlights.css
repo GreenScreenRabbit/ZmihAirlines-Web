@@ -1,6 +1,197 @@
 .selectFlights-body {
-  height: 800px;
-  width: 100px;
-  background-color: purple;
+  position: absolute;
+  height: 1400px;
+  width: 100%;
+  background-color: whitesmoke;
+}
+
+.selectFlights-continueButton-body {
+  position: relative;
+  left: 70%;
+  font-size: 90px;
+  vertical-align: middle;
+  text-align: center;
+  top: 75px;
+  height: 150px;
+  width: 300px;
+  text-decoration: none;
+  color: black;
+  background-color: palevioletred;
+}
+
+.selectFlights-continueButton-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-color: #b1b9c2;
+}
+
+.selectFlights-selectYourBundle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 26px;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  color: silver;
+}
+
+.selectFlights-selectedBundle {
+  position: absolute;
+  top: calc(50% - 60px);
+  left: calc(50% - 100px);
+  height: 100px;
+  width: 200px;
+  font-size: 48px;
+  vertical-align: middle;
+  text-align: center;
+  background-color: palevioletred;
+}
+
+.selectFlights-buyButton {
+  position: absolute;
+  top: calc(50% - 60px);
+  left: calc(50% - 100px);
+  height: 100px;
+  width: 200px;
+  background-color: royalblue;
+}
+
+.selectFlights-cartBody {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 80%;
+  height: 400px;
+  background-color: #e2e0e0;
+}
+
+.selectFlights-flightName {
+  position: relative;
+  height: 15%;
+  width: 100%;
+  background-color: slategray;
+}
+
+.selectFlights-flightName-textContainer {
+  position: relative;
+  top: 50%;
+  left: 10%;
+  -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%);
+  font-size: 48px;
+}
+
+.selectFlights-dataContainer {
+  position: relative;
+  height: 25%;
+  width: 100%;
+  background-color: #b1b9c2;
+}
+
+.selectFlights-mainSection {
+  position: relative;
+  height: 60%;
+  width: 100%;
+  background-color: #dde3eb;
+}
+
+.selectFlights-mainSection-timeSection {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+  width: 60%;
+}
+
+.selectFlights-mainSection-buy {
+  position: relative;
+  display: inline-block;
+  height: 100%;
+  width: 40%;
+}
+
+.selectFlights-selectBaggage-container {
+  position: absolute;
+  opacity: 0;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  margin-top: -100px;
+  z-index: 4;
+  height: 0px;
+  width: 100%;
+  background-color: #b1b9c2;
+}
+
+.selectFlights-selectBaggage-container-isOpen {
+  z-index: 4;
+  opacity: 1;
+  position: absolute;
+  height: 600px;
+  width: 100%;
+  background-color: #b1b9c2;
+  -webkit-transition: all 1.5s;
+  transition: all 1.5s;
+}
+
+.selectFlights-selectBaggage-cartBody {
+  z-index: 4;
+  position: relative;
+  height: 700px;
+  width: 100%;
+  margin-top: 0px;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  background-color: #b1b9c2;
+}
+
+.selectFlights-selectBaggage-cartBody:hover {
+  margin-top: -10px;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+}
+
+.selectFlights-selectBaggage-cartBody-headling {
+  position: absolute;
+  font-size: 36px;
+  vertical-align: middle;
+  text-align: center;
+  width: 100%;
+  height: 10%;
+  background-color: #4c2dfa;
+}
+
+.selectFlights-selectBaggage-cartBody-iconContainer {
+  position: absolute;
+  top: 22%;
+  left: 50%;
+  height: 125px;
+  width: 175px;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.selectFlights-selectBaggage-cartBody-icon {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.selectFlights-selectBaggage-cartBody-bundleList {
+  padding: 20px;
+  position: absolute;
+  top: 40%;
+  height: 40%;
+  width: 80%;
+  left: 10%;
+  background-color: #e2e0e0;
+}
+
+.selectFlights-selectBaggage-cartBody-buyButton {
+  position: absolute;
+  top: 85%;
+  width: 80%;
+  height: 10%;
+  left: 10%;
+  background-color: royalblue;
 }
 /*# sourceMappingURL=selectFlights.css.map */
