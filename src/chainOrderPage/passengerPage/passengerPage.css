@@ -1,0 +1,135 @@
+.passengerPage-nextButton {
+  position: relative;
+  margin-top: 100px;
+  float: right;
+  margin-right: 50px;
+  width: 300px;
+  height: 150px;
+  background-color: cornflowerblue;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  font-size: 90px;
+  text-align: center;
+  color: black;
+  text-decoration: none;
+}
+
+.passengerPage-nextButton:hover {
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  background-color: blue;
+}
+
+.passengerPage-backButton {
+  position: relative;
+  height: 150px;
+  width: 300px;
+  margin-top: 50px;
+  margin-left: 50px;
+  background-color: cornflowerblue;
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  font-size: 90px;
+  text-align: center;
+  color: black;
+  text-decoration: none;
+}
+
+.passengerPage-backButton:hover {
+  -webkit-transition: all 1s;
+  transition: all 1s;
+  background-color: blue;
+}
+
+.passengerPage-body {
+  position: absolute;
+  width: 100%;
+  height: 1400px;
+  background-color: whitesmoke;
+}
+
+.passengerPage-personalityData-container {
+  position: absolute;
+  background-color: honeydew;
+  margin-top: 50px;
+  height: 250px;
+  width: 80%;
+  left: 10%;
+}
+
+.passengerPage-personalityData-data {
+  position: relative;
+}
+
+.passengerPage-personalityData-inputsContainer {
+  position: absolute;
+  top: calc(50% - 40px);
+  height: 80px;
+  width: 700px;
+  display: inline;
+  white-space: nowrap;
+}
+
+.passengerPage-personalityData-input {
+  position: relative;
+  font-size: 48px;
+  top: calc(50% - 40px);
+  height: 80px;
+  width: 350px;
+}
+
+.passengerPage-personalityData-sexContainer {
+  position: absolute;
+  top: calc(50% - 40px);
+  height: 80px;
+  width: 40%;
+  display: inline-block;
+  background-color: red;
+}
+
+.passengerPage-personalityData-buttonSelectSex {
+  position: relative;
+  display: inline-block;
+  top: calc(50% - 40px);
+  height: 80px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-size: 20px;
+  border: #8f8f8f solid 1.5px;
+  width: calc(100% / 3);
+  background-color: #e6e0dc;
+}
+
+.Yourbaggage-container {
+  position: relative;
+  background-color: brown;
+  left: 0%;
+  width: 100%;
+  height: 500px;
+}
+
+.Yourbaggage-heading {
+  font-size: 60px;
+  font-family: SANS;
+  text-align: center;
+  position: relative;
+  background-color: #e7e2e2;
+  left: 0%;
+  width: 100%;
+  height: 100px;
+}
+
+.Yourbaggage-img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.Yourbaggage-infornationContainer {
+  font-size: 80px;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 30px;
+}
+/*# sourceMappingURL=passengerPage.css.map */

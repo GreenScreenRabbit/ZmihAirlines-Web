@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { ActionsTypes } from './actions and const/actions'
-import { SELECTED_LANGUAGE, SET_BOOLEAN_CHAIN_PAGE_CORRECT } from './actions and const/const'
+import { SELECTED_LANGUAGE, SET_BOOLEAN_CHAIN_PAGE_CORRECT, SET_BUSY_SEATS } from './actions and const/const'
 
 const initialState: initialStateType = {
     selectedLanguage: 'EN'
@@ -14,10 +14,12 @@ type initialStateType = {
 
 type initialChainStateType = {
     chainPagesCorreсt: boolean[]
+    busySeats: number[]
 }
 
 const initialChainState: initialChainStateType = {
-    chainPagesCorreсt: [false, false, false, false]
+    chainPagesCorreсt: [false, false, false, false],
+    busySeats: []
 }
 
 const generalStateReducer = (generalState = initialState, action: ActionsTypes) => {
@@ -44,6 +46,15 @@ const chainStateReducer = (chainState = initialChainState, action: ActionsTypes)
             }
 
             // [...state.filtersForCatalogCategory.slice(0, action.indexFilterForDeleteBrand), ...state.filtersForCatalogCategory.slice(action.indexFilterForDeleteBrand + 1)]
+        }
+
+        case SET_BUSY_SEATS: {
+            return {
+                ...chainState,
+                // busySeats: [action.buseSeats]
+                // busySeats: Object.assign(action.buseSeats)
+                busySeats: [...action.buseSeats]
+            }
         }
 
         default:

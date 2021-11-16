@@ -1,0 +1,143 @@
+.seatsPage {
+    &-seatBlockContainer {
+        position: relative;
+        top: calc(50% - (112px / 2));
+        width: 375px;
+        height: 125px;
+        background-color: yellowgreen;
+        margin: auto;
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+    &-seatBlock {
+        position: relative;
+        height: 25px;
+        width: 25px;
+        background-color: wheat;
+        border: 0.5px solid silver;
+
+
+        // margin-left: 2%;
+        // margin-right: 2%;
+        // margin-bottom: 2%;
+        // display: inline-block;
+
+
+    }
+    &-body {
+        position: relative;
+        width: 100%;
+        height: 700px;
+        background-color: whitesmoke;
+    }
+    &-mainContainer {
+        position: absolute;
+        left: 10%;
+        top: 10%;
+        height: 80%;
+        width: 80%;
+        background-color: rgb(223, 221, 221);
+    }
+    &-blockA_Container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background-color: blue;
+    }
+    &-blockB_Container {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background-color: brown;
+    }
+    &-blockA {
+        &-top {
+            display: inline-block;
+
+            position: absolute;
+            height: 40%;
+            width: 100%;
+            padding: 4px;
+            background-color: rgb(255, 253, 247);
+        }
+        &-bottom {
+            display: inline-block;
+
+            position: absolute;
+            top: 60%;
+            height: 40%;
+            width: 100%;
+            padding: 4px;
+            background-color: rgb(255, 253, 247);
+        }&-text{
+            position: absolute;
+            font-size: 100px;
+            opacity: 0.25;
+            color: black;
+            pointer-events: none;
+        }
+    }
+    &-blockB {
+        &-top {
+            display: inline-block;
+
+            position: absolute;
+            height: 40%;
+            width: 100%;
+            padding: 4px;
+            background-color: rgb(255, 253, 247);
+        }
+        &-bottom {
+            display: inline-block;
+
+            position: absolute;
+            top: 60%;
+            height: 40%;
+            width: 100%;
+            padding: 4px;
+            background-color: rgb(255, 253, 247);
+        }&-text{
+            position: absolute;
+            top: 60%;
+            font-size: 100px;
+            opacity: 0.25;
+            color: black;
+            pointer-events: none;
+        }
+    }&-popUp{
+        z-index: 3;
+        position: absolute;
+        left: 100%;
+        top: -400%;
+
+        height: 350px;
+        width: 250px;
+        background-color: whitesmoke;
+        box-sizing: border-box;
+        border: silver solid 2px;
+        &-closeBut{
+            position: relative;
+            width: 50%;
+            height: 20%;
+            left: 50%;
+            font-size: 42px;
+            text-align: center;
+            background-color: rgb(250, 52, 52);
+        }
+    }
+    &-blockContainer{
+        position: relative;
+
+
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-bottom: 2%;
+
+
+
+
+        height: 25px;
+        width: 25px;
+        display: inline-block;
+    }
+}

@@ -3,7 +3,9 @@ import { connect, RootStateOrAny } from 'react-redux'
 import { Link, Route, Routes } from 'react-router-dom'
 import { actions } from '../actions and const/actions'
 import './chainOrderPage.css'
+import PassengerPage from './passengerPage/PassengerPage'
 import SelectFlights from './selectFlights/SelectFlights'
+import SeatsPage from './seatsPage/SeatsPage'
 
 type PropsType = {
     setChainPageCorrect: (arg0: number) => void
@@ -13,6 +15,8 @@ type PropsType = {
 const ChainOrderPage = (props: PropsType, { match }: any) => {
     console.log('match')
     console.log(match)
+    console.log("RNDR");
+    
 
     const leftBarPageDivChangeColor = (bol: boolean) => {
         let forRetrunStyle: string[] = []
@@ -53,35 +57,10 @@ const ChainOrderPage = (props: PropsType, { match }: any) => {
                             {/* <Route path="/selectFlights" 
                             element={<SelectFlights />}  */}
 
+                            <Route path="/seats" element={<SeatsPage />} />
+                            <Route path="/passenger" element={<PassengerPage />} />
                             <Route path="/selectFlights" element={<SelectFlights />} />
-                        </Routes> 
-
-                        {/* <Link to="./selectFlights"> */}
-
-                        <Link to="selectFlights">
-                            <div
-                                style={{
-                                    left: '200px',
-                                    position: 'absolute',
-                                    height: '100px',
-                                    width: '100px',
-                                    backgroundColor: 'green'
-                                }}>
-                                200
-                            </div>
-                        </Link>
-
-                        <Link to="/">
-                            <div
-                                style={{
-                                    position: 'absolute',
-                                    height: '100px',
-                                    width: '100px',
-                                    backgroundColor: 'green'
-                                }}>
-                                44
-                            </div>
-                        </Link>
+                        </Routes>
                     </div>
                 </Col>
             </Row>

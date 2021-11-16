@@ -1,0 +1,138 @@
+.passengerPage {
+    &-nextButton {
+        position: relative;
+        margin-top: 100px;
+        float: right;
+        margin-right: 50px;
+        width: 300px;
+        height: 150px;
+        background-color: cornflowerblue;
+        transition: all 1s;
+        font-size: 90px;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+        &:hover {
+            transition: all 1s;
+            background-color: blue;
+        }
+    }
+    &-backButton {
+        position: relative;
+        height: 150px;
+        width: 300px;
+        margin-top: 50px;
+        margin-left: 50px;
+        background-color: cornflowerblue;
+        transition: all 1s;
+        font-size: 90px;
+        text-align: center;
+        color: black;
+        text-decoration: none;
+        &:hover {
+            transition: all 1s;
+            background-color: blue;
+        }
+    }
+    &-body {
+        position: absolute;
+        width: 100%;
+        height: 1400px;
+        background-color: whitesmoke;
+    }
+    &-personalityData {
+        &-container {
+            position: absolute;
+            background-color: honeydew;
+            margin-top: 50px;
+            height: 250px;
+            width: 80%;
+            left: 10%;
+        }
+        &-data {
+            position: relative;
+        }
+        &-inputsContainer {
+            position: absolute;
+            // top: calc(50% - 30px);
+            top: calc(50% - 40px);
+            height: 80px;
+            width: 700px;
+
+            display: inline;
+            white-space: nowrap;
+        }
+        &-input {
+            position: relative;
+
+            font-size: 48px;
+
+            top: calc(50% - 40px);
+            height: 80px;
+            width: 350px;
+        }
+        &-sexContainer {
+            position: absolute;
+            // top: calc(50% - 30px);
+            top: calc(50% - 40px);
+            height: 80px;
+            // width: 400px;
+            width: 40%;
+
+            display: inline-block;
+            background-color: red;
+        }
+        &-buttonSelectSex {
+            position: relative;
+
+            display: inline-block;
+            top: calc(50% - 40px);
+            height: 80px;
+            box-sizing: border-box;
+            font-size: 20px;
+
+            border: rgb(143, 143, 143) solid 1.5px;
+            width: calc(100% / 3);
+            background-color: rgb(230, 224, 220);
+        }
+    }
+}
+
+.Yourbaggage {
+    &-container {
+        position: relative;
+        background-color: brown;
+        left: 0%;
+        width: 100%;
+        height: 500px;
+    }
+    &-heading {
+        font-size: 60px;
+        font-family: SANS;
+        text-align: center;
+        position: relative;
+        background-color: rgb(231, 226, 226);
+        left: 0%;
+        width: 100%;
+        height: 100px;
+    }
+    // &-imgContainer {
+    //     position: absolute;
+    //     left: 10%;
+    //     top: 10%;
+    //     width: 30%;
+    //     height: 80%;
+    // }
+    &-img {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+    &-infornationContainer {
+        font-size: 80px;
+        position: relative;
+        height: 100%;
+        width: 100%;
+        padding: 30px;
+    }
+}

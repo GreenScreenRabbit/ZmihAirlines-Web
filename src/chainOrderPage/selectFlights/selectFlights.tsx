@@ -63,10 +63,12 @@ const SelectFlights = () => {
                         </div>
                     </div>
                     <div className={styleSelectBaggage()}>
-                        <Row >
+                        <Row>
                             {/* display: isSelectBaggageOpen ? "block" : "none" */}
-                            <Col style={{ zIndex: 3   }}>
-                                <div className="selectFlights-selectBaggage-cartBody" style={{display: isSelectBaggageOpen ? "block" : "none"}}>
+                            <Col style={{ zIndex: 3 }}>
+                                <div
+                                    className="selectFlights-selectBaggage-cartBody"
+                                    style={{ display: isSelectBaggageOpen ? 'block' : 'none' }}>
                                     <div className="selectFlights-selectBaggage-cartBody-headling">BASIC</div>
                                     <div className="selectFlights-selectBaggage-cartBody-iconContainer">
                                         <img src={someIcon} className="selectFlights-selectBaggage-cartBody-icon" />
@@ -82,7 +84,9 @@ const SelectFlights = () => {
                             </Col>
 
                             <Col style={{ zIndex: 3 }}>
-                                <div className="selectFlights-selectBaggage-cartBody" style={{display: isSelectBaggageOpen ? "block" : "none"}}>
+                                <div
+                                    className="selectFlights-selectBaggage-cartBody"
+                                    style={{ display: isSelectBaggageOpen ? 'block' : 'none' }}>
                                     <div className="selectFlights-selectBaggage-cartBody-headling">PREMIUM</div>
                                     <div className="selectFlights-selectBaggage-cartBody-iconContainer">
                                         <img src={someIcon} className="selectFlights-selectBaggage-cartBody-icon" />
@@ -97,7 +101,9 @@ const SelectFlights = () => {
                                 </div>
                             </Col>
                             <Col style={{ zIndex: 3 }}>
-                                <div className="selectFlights-selectBaggage-cartBody" style={{display: isSelectBaggageOpen ? "block" : "none"}}>
+                                <div
+                                    className="selectFlights-selectBaggage-cartBody"
+                                    style={{ display: isSelectBaggageOpen ? 'block' : 'none' }}>
                                     <div className="selectFlights-selectBaggage-cartBody-headling">ULTRA PREMIUM</div>
                                     <div className="selectFlights-selectBaggage-cartBody-iconContainer">
                                         <img src={someIcon} className="selectFlights-selectBaggage-cartBody-icon" />
@@ -116,9 +122,11 @@ const SelectFlights = () => {
 
                     {isBaggageSelected ? (
                         <div className="selectFlights-continueButton-container">
-                            <Link to="/passenger">
-                                <div className="selectFlights-continueButton-body">NEXT</div>
-                            </Link>
+                            <div className="selectFlights-continueButton-body">
+                                <Link to="../passenger">
+                                    <div className="selectFlights-continueButton-body">CLICK</div>
+                                </Link>
+                            </div>
                         </div>
                     ) : null}
                 </div>
