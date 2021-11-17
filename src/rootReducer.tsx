@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import { ActionsTypes } from './actions and const/actions'
-import { SELECTED_LANGUAGE, SET_BOOLEAN_CHAIN_PAGE_CORRECT, SET_BUSY_SEATS } from './actions and const/const'
+import { SELECTED_LANGUAGE, SET_BOOLEAN_CHAIN_PAGE_CORRECT, SET_BUSY_SEATS, SET_INDEX_SELECTED_SEAT } from './actions and const/const'
 
 const initialState: initialStateType = {
     selectedLanguage: 'EN'
@@ -15,11 +15,13 @@ type initialStateType = {
 type initialChainStateType = {
     chainPagesCorreсt: boolean[]
     busySeats: number[]
+    indexSelectedSeat: number | null
 }
 
 const initialChainState: initialChainStateType = {
     chainPagesCorreсt: [false, false, false, false],
-    busySeats: []
+    busySeats: [],
+    indexSelectedSeat: null,
 }
 
 const generalStateReducer = (generalState = initialState, action: ActionsTypes) => {
@@ -54,6 +56,13 @@ const chainStateReducer = (chainState = initialChainState, action: ActionsTypes)
                 // busySeats: [action.buseSeats]
                 // busySeats: Object.assign(action.buseSeats)
                 busySeats: [...action.buseSeats]
+            }
+        }
+
+        case SET_INDEX_SELECTED_SEAT: {
+            return{
+                ...chainState,
+                    indexSelectedSeat: action.index
             }
         }
 

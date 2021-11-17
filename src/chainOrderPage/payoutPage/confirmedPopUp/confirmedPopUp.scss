@@ -1,0 +1,41 @@
+.confirmedPopUp {
+    &-backWallpaper {
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        height: 100%;
+        z-index: 5;
+        width: 100%;
+        opacity: 0.5;
+        background-color: black;
+    }
+    &-body {
+        position: fixed;
+        z-index: 6;
+        top: calc(50% - 350px);
+        height: 700px;
+        width: 60%;
+        left: 20%;
+        background-color: slategray;
+    }
+    &-inToProfile {
+        position: absolute;
+        height: 100px;
+        width: 25%;
+        top: 75%;
+        left: 55%;
+        font-size: 50px;
+        border-radius: 15px;
+        background-color: rgb(70, 70, 255);
+    }
+    &-okButton {
+        position: absolute;
+        height: 100px;
+        width: 25%;
+        top: 75%;
+        left: 20%;
+        font-size: 50px;
+        border-radius: 15px;
+        background-color: whitesmoke;
+    }
+}

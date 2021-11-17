@@ -1,26 +1,23 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { connect, RootStateOrAny } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { actions } from '../../actions and const/actions'
 import './seatsPage.css'
 
 type PropsType = {
     busySeats: number[]
+    indexSelectedSeat: number
     setRandomBusySeats: (arg0: number[]) => void
+    setIndexDelectedSeat: (arg0: number) => void
 }
 
 const SeatsPage = (props: PropsType) => {
-    // useEffect(() => {
-    //     addBoxes()
-    // })
-
-    const [a, setA] = useState<number>(0)
     const [indexClicedBox, setIndexClicedBox] = useState<number>(0)
     const [openPopUpBox, setOpenPopUpBox] = useState<boolean>(false)
+    const [isBoxCorrect, setIsBoxCorrect] = useState<boolean>(false)
 
     const randomBusySeats: number[] = []
-
-    const seats = 240
 
     const allSeatsBlock: any[] = []
 
@@ -29,26 +26,43 @@ const SeatsPage = (props: PropsType) => {
     let arrBoxsForBlock_BBlockTop: React.ReactElement[] = []
     let arrBoxsForBlock_BBlockBottom: React.ReactElement[] = []
 
+    const cheadIsBoxCorrect = (e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.target as HTMLDivElement
+
+        let k = e.target as HTMLDivElement
+
+        console.log('e')
+        console.log(target.id)
+
+        console.log(target!.style.backgroundColor)
+        if (props.busySeats.includes(+target.id)) {
+            setIsBoxCorrect(false)
+        } else {
+            setIsBoxCorrect(true)
+        }
+        // if (target!.style.backgroundColor == 'rgb(255, 38, 0)') {
+        //     setIsBoxCorrect(false)
+        // } else if ('green') {
+        //     setIsBoxCorrect(false)
+        // }
+    }
+
     const boxsColor = (item: number) => {
         let forReturn: string = ''
 
-        console.log('item')
-        console.log(item)
-        console.log(props.busySeats)
-
         if (props.busySeats.includes(item)) {
-            forReturn = 'red'
+            forReturn = 'rgb(255, 38, 0)'
         } else {
-            forReturn = 'blue'
+            forReturn = 'green'
         }
 
-        // props.busySeats.forEach((seats) => {
-        //     if (item == seats) {
-        //         forReturn = 'red'
-        //     } else {
-        //         forReturn = 'blue'
-        //     }
-        // })
+        if (indexClicedBox == item && openPopUpBox && forReturn != 'red') {
+            forReturn = 'purple'
+        }
+
+        if (props.indexSelectedSeat == item) {
+            forReturn = 'blue'
+        }
 
         return forReturn
     }
@@ -61,35 +75,18 @@ const SeatsPage = (props: PropsType) => {
         }
         creacteLengthArrayForSeatsBlock()
 
-        // const randomingBusySeats = (allSeatsBlock: number[]) => {
-        //     let copiedAllSeatsBlock = [...allSeatsBlock]
-        //     for (let i = 0; i < 200; i++) {
-        //         const random = Math.floor(Math.random() * copiedAllSeatsBlock.length)
-        //         randomBusySeats.push(copiedAllSeatsBlock[random])
-
-        //         copiedAllSeatsBlock = [
-        //             ...copiedAllSeatsBlock.slice(0, random),
-        //             ...copiedAllSeatsBlock.slice(random + 1)
-        //         ]
-        //     }
-
-        //     console.log("randomBusySeats");
-        //     console.log(randomBusySeats);
-
-        //     // props.randomBusySeats(randomBusySeats)
-        // }
-        // randomingBusySeats(allSeatsBlock)
-
         const allSeatsBlockJSXeL: JSX.Element[] = allSeatsBlock.map((item: number, index) => {
             return (
                 <div className="seatsPage-blockContainer">
                     <div
                         key={item}
+                        id={item.toString()}
                         className="seatsPage-seatBlock"
                         style={{ backgroundColor: boxsColor(item) }}
-                        onClick={() => {
+                        onClick={(e) => {
                             setIndexClicedBox(item)
                             setOpenPopUpBox(!openPopUpBox)
+                            cheadIsBoxCorrect(e)
                         }}></div>
                     {indexClicedBox == index ? (
                         openPopUpBox ? (
@@ -97,6 +94,23 @@ const SeatsPage = (props: PropsType) => {
                                 <div className="seatsPage-popUp-closeBut" onClick={() => setOpenPopUpBox(false)}>
                                     X
                                 </div>
+                                {isBoxCorrect ? (
+                                    <div className="seatsPage-popUp-bodyPos">
+                                        TRUE
+                                        <div className="seatsPage-popUp-addSeatText">SELECT THIS SEAT ?</div>
+                                        <div
+                                            className="seatsPage-popUp-addButton"
+                                            onClick={() => props.setIndexDelectedSeat(item)}>
+                                            SELECT
+                                        </div>
+                                        {props.setIndexDelectedSeat}
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="seatsPage-popUp-bodyNegative"></div>
+                                        <div className="seatsPage-popUp-busySeatNegative">busy is seat</div>
+                                    </>
+                                )}
                             </div>
                         ) : null
                     ) : null}
@@ -104,58 +118,18 @@ const SeatsPage = (props: PropsType) => {
             )
         })
 
-        // allSeatsBlock.forEach((item: any, index) => {
         allSeatsBlockJSXeL.forEach((item: JSX.Element, index) => {
             if (index < 60) {
-                arrBoxsForBlock_ABlockTop.push(
-                    // <div
-                    //     key={item}
-                    //     className="seatsPage-seatBlock"
-                    //     style={{ backgroundColor: boxsColor(item) }}
-                    //     onClick={() => {
-                    //         setIndexClicedBox(item)
-                    //         setOpenPopUpBox(!openPopUpBox)
-                    //     }}>
-                    //     {indexClicedBox == index ? openPopUpBox ? <div className="seatsPage-popUp"></div> : null : null}
-                    // </div>
-                    item
-                )
+                arrBoxsForBlock_ABlockTop.push(item)
             }
             if (index < 120 && index > 59) {
-                arrBoxsForBlock_ABlockBottom.push(
-                    // <div
-                    //     key={item}
-                    //     className="seatsPage-seatBlock"
-                    //     style={{ backgroundColor: boxsColor(item) }}
-                    //     onClick={() => console.log(index)}>
-                    //         {indexClicedBox == index ? openPopUpBox ? <div className="seatsPage-popUp"></div> : null : null}
-                    //     </div>
-                    item
-                )
+                arrBoxsForBlock_ABlockBottom.push(item)
             }
             if (index < 180 && index > 119) {
-                arrBoxsForBlock_BBlockTop.push(
-                    // <div
-                    //     key={item}
-                    //     className="seatsPage-seatBlock"
-                    //     style={{ backgroundColor: boxsColor(item) }}
-                    //     onClick={() => console.log(index)}>
-                    //         {indexClicedBox == index ? openPopUpBox ? <div className="seatsPage-popUp"></div> : null : null}
-                    //     </div>
-                    item
-                )
+                arrBoxsForBlock_BBlockTop.push(item)
             }
             if (index < 240 && index > 179) {
-                arrBoxsForBlock_BBlockBottom.push(
-                    // <div
-                    //     key={item}
-                    //     className="seatsPage-seatBlock"
-                    //     style={{ backgroundColor: boxsColor(item) }}
-                    //     onClick={() => console.log(index)}>
-                    //         {indexClicedBox == index ? openPopUpBox ? <div className="seatsPage-popUp"></div> : null : null}
-                    //     </div>
-                    item
-                )
+                arrBoxsForBlock_BBlockBottom.push(item)
             }
         })
     }
@@ -169,36 +143,18 @@ const SeatsPage = (props: PropsType) => {
             copiedAllSeatsBlock = [...copiedAllSeatsBlock.slice(0, random), ...copiedAllSeatsBlock.slice(random + 1)]
         }
 
-        // console.log('allSeatsBlock')
-        // console.log(allSeatsBlock)
-
-        // console.log('randomBusySeats')
-        // console.log(randomBusySeats)
-
-        // props.randomBusySeats(randomBusySeats)
-
         return randomBusySeats
     }
     addBoxes()
     randomingBusySeats(allSeatsBlock)
 
-    // const boxsColor = (index: number) => {
-    //     let forReturn: string = ''
-
-    //     randomBusySeats.forEach((seats) => {
-    //         if (index == seats) {
-    //             forReturn = 'red'
-    //         } else {
-    //             forReturn = 'blue'
-    //         }
-    //     })
-
-    //     return forReturn
-    // }
-
     return (
         <>
             <div className="seatsPage-body">
+                <div className="seatsPage-heading">
+                    <button className="seatsPage-heading-backButton">BACK</button>
+                    <div className="seatsPage-heading-text">CHOOSE YOUR SEAT</div>
+                </div>
                 <div className="seatsPage-mainContainer">
                     <Row style={{ height: '100%', width: '100%' }}>
                         <Col>
@@ -211,20 +167,26 @@ const SeatsPage = (props: PropsType) => {
                         </Col>
                         <Col>
                             <div className="seatsPage-blockB_Container">
-                                <button onClick={() => setA(a + 2)} value={'IggII'} />
                                 <div className="seatsPage-blockB-top">{arrBoxsForBlock_BBlockTop}</div>
                                 <div className="seatsPage-blockB-bottom">{arrBoxsForBlock_BBlockBottom}</div>
                             </div>
                         </Col>
                     </Row>
                 </div>
+                <Link to="../payout">
+                    <button className="seatsPage-nextButton">NEXT</button>
+                </Link>
             </div>
         </>
     )
 }
 
 let mapStateToProps = (state: RootStateOrAny) => ({
-    busySeats: state.chainState.busySeats
+    busySeats: state.chainState.busySeats,
+    indexSelectedSeat: state.chainState.indexSelectedSeat
 })
 
-export default connect(mapStateToProps, { setRandomBusySeats: actions.setRandomBusySeats })(SeatsPage)
+export default connect(mapStateToProps, {
+    setRandomBusySeats: actions.setRandomBusySeats,
+    setIndexDelectedSeat: actions.setIndexDelectedSeat
+})(SeatsPage)

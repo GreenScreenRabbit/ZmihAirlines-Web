@@ -25,6 +25,7 @@ const Header = (props: PropsType) => {
                 <Link to="informationPage">
                     <div className="">5</div>
                 </Link>
+                <div className="">Profile</div>
                 <div className="header-chooseLanguage-dropItemsContainer">
                     <div className="header-chooseLanguage" onClick={() => setIsOpenDropMenu(!isOpenDropMenu)}>
                         {props.selectedLanguage}

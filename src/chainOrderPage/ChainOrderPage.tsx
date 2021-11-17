@@ -6,6 +6,7 @@ import './chainOrderPage.css'
 import PassengerPage from './passengerPage/PassengerPage'
 import SelectFlights from './selectFlights/SelectFlights'
 import SeatsPage from './seatsPage/SeatsPage'
+import PayoutPage from './payoutPage/PayoutPage'
 
 type PropsType = {
     setChainPageCorrect: (arg0: number) => void
@@ -15,8 +16,7 @@ type PropsType = {
 const ChainOrderPage = (props: PropsType, { match }: any) => {
     console.log('match')
     console.log(match)
-    console.log("RNDR");
-    
+    console.log('RNDR')
 
     const leftBarPageDivChangeColor = (bol: boolean) => {
         let forRetrunStyle: string[] = []
@@ -57,6 +57,7 @@ const ChainOrderPage = (props: PropsType, { match }: any) => {
                             {/* <Route path="/selectFlights" 
                             element={<SelectFlights />}  */}
 
+                            <Route path="/payout" element={<PayoutPage />} />
                             <Route path="/seats" element={<SeatsPage />} />
                             <Route path="/passenger" element={<PassengerPage />} />
                             <Route path="/selectFlights" element={<SelectFlights />} />
