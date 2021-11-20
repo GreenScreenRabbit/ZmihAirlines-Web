@@ -6,6 +6,8 @@ import someIcon from '../../someIcon.jpg'
 import './passengerPage.css'
 
 const PassengerPage = () => {
+
+
     const firstNameRegExp = new RegExp('\\w{3}')
     const lastNameRegExp = new RegExp('\\w{4}')
 
@@ -54,30 +56,9 @@ const PassengerPage = () => {
                                         </div>
                                     )
                                 })}
-
-                                {/* <div
-                                    className="passengerPage-personalityData-buttonSelectSex"
-                                    onClick={(e) => hundleClickSButton(e)}
-                                    style={{ backgroundColor: buttonSelectSexStype() }}>
-                                    MALE
-                                </div>
-                                <div
-                                    className="passengerPage-personalityData-buttonSelectSex"
-                                    onClick={(e) => hundleClickSButton(e)}
-                                    style={{ backgroundColor: buttonSelectSexStype() }}>
-                                    FEMALE
-                                </div>
-                                <div
-                                    className="passengerPage-personalityData-buttonSelectSex"
-                                    onClick={(e) => hundleClickSButton(e)}
-                                    style={{ backgroundColor: buttonSelectSexStype() }}>
-                                    TRANSFORMER
-                                </div> */}
                             </div>
                         </Col>
                     </Row>
-
-                    {/* <div className="passengerPage-personalityData-data"></div> */}
 
                     <div className="Yourbaggage-heading">Your baggage</div>
                     <Row>

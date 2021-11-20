@@ -1,11 +1,90 @@
 import { useRef, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import { connect } from 'react-redux'
+import { connect, RootStateOrAny } from 'react-redux'
 import './selectFlights.css'
 import someIcon from '../../someIcon.jpg'
 import { Link } from 'react-router-dom'
+import { actions } from '../../actions and const/actions'
+import { BagageType } from './SelectFlightsTypes'
+import { selectLanguage } from '../../selectLanguage'
+import { LanguageType } from '../../languageType'
 
-const SelectFlights = () => {
+type PropsType = {
+    selectedLanguage: LanguageType
+    //TODO TYPE THIS NORMAL
+    setSelectedBagage: (arg0: BagageType) => void
+}
+
+const SelectFlights = (props: PropsType) => {
+    enum LanguageBagageType {
+        bagageText = 'bagageText'
+    }
+
+    enum LanguageBagageTextType {
+        basic = 'basic',
+        premium = 'premium',
+        ultraPremium = 'ultraPremium'
+    }
+
+
+
+    type LanguageObjectsText = {
+        [keyof in LanguageBagageType]: { [keyof in LanguageBagageTextType]: string }
+    }
+
+    type LanguageTextType<T> = {
+        [keyof in LanguageType]: T
+        // [keyof in LanguageType]: { [keyof in LanguageBagageType]: { [keyof in LanguageBagageTextType]: string } }
+
+        // { [keyof in LanguageBagageType]: { [keyof in LanguageBagageTextType]: string } }
+
+ 
+        // [keyof in LanguageBagageType]: { [keyof in LanguageBagageTextType]: string }
+
+    }
+
+
+    let languageText: LanguageTextType<LanguageObjectsText> = {
+        EN: {
+            bagageText: {
+                basic: 'Its bagage is default',
+                premium: 'Its bagage is premium',
+                ultraPremium: 'Its bagage is ultra premium'
+            }
+        },
+        RU: {
+            bagageText: {
+                basic: 'Просто багаж',
+                premium: 'Это премиум багаж',
+                ultraPremium: 'А вот это уже ультра премиум'
+            }
+        }
+    }
+
+    // let SelectFlightsTypeConst: ReturnType<typeof selectLanguage> = selectLanguage(languageText, props.selectedLanguage)
+
+    // type SelectFlightsType = typeof SelectFlightsTypeConst
+
+    let selecteLanguageText = selectLanguage(languageText, props.selectedLanguage)
+
+
+    console.log('selecteLanguageText')
+    console.log(selecteLanguageText?.bagageText)
+
+    //TODO а вот тут тоже типизацию норм сделать
+    const selectDesiredLanguage = (languageObj: object) => {
+        let languageAr: string[] = Object.keys(languageObj)
+
+        let selectedLenguage: string = ''
+
+        languageAr.forEach((language) => {
+            if (language == props.selectedLanguage) {
+                selectedLenguage = language
+            }
+        })
+    }
+    selectDesiredLanguage(languageText)
+
     const selectBaggageRef = useRef(null)
 
     const [isSelectBaggageOpen, setIsSelectBaggageOpen] = useState<boolean>(false)
@@ -41,7 +120,9 @@ const SelectFlights = () => {
                                 isBaggageSelected ? (
                                     <div
                                         className="selectFlights-selectedBundle"
-                                        onClick={() => setIsSelectBaggageOpen(!isSelectBaggageOpen)}>
+                                        onClick={() => {
+                                            setIsSelectBaggageOpen(!isSelectBaggageOpen)
+                                        }}>
                                         CHANGE
                                     </div>
                                 ) : (
@@ -77,6 +158,7 @@ const SelectFlights = () => {
                                     <div
                                         className="selectFlights-selectBaggage-cartBody-buyButton"
                                         onClick={() => {
+                                            props.setSelectedBagage(BagageType.BASIC)
                                             setIsBaggageSelected(true)
                                             setIsSelectBaggageOpen(false)
                                         }}></div>
@@ -95,6 +177,7 @@ const SelectFlights = () => {
                                     <div
                                         className="selectFlights-selectBaggage-cartBody-buyButton"
                                         onClick={() => {
+                                            props.setSelectedBagage(BagageType.PREMIUM)
                                             setIsBaggageSelected(true)
                                             setIsSelectBaggageOpen(false)
                                         }}></div>
@@ -112,6 +195,7 @@ const SelectFlights = () => {
                                     <div
                                         className="selectFlights-selectBaggage-cartBody-buyButton"
                                         onClick={() => {
+                                            props.setSelectedBagage(BagageType.ULTRAPREMIUM)
                                             setIsBaggageSelected(true)
                                             setIsSelectBaggageOpen(false)
                                         }}></div>
@@ -135,4 +219,8 @@ const SelectFlights = () => {
     )
 }
 
-export default connect(null, null)(SelectFlights)
+let mapStateToProps = (state: RootStateOrAny) => ({
+    selectedLanguage: state.generalState.selectedLanguage
+})
+
+export default connect(mapStateToProps, { setSelectedBagage: actions.setSelectedBagage })(SelectFlights)

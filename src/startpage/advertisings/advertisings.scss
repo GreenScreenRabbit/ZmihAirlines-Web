@@ -1,0 +1,43 @@
+.advertisings {
+    &-body {
+        position: relative;
+        height: 1200px;
+        width: 100%;
+        background-color: whitesmoke;
+    }
+    &-content{
+        margin-top: 5%;
+        position: absolute;
+        height: 90%;
+        width: 100%;
+    }
+    &-randonAd {
+        
+        position: relative;
+        height: 250px;
+        background-color: rgb(183, 232, 255);
+        width: 220px;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-bottom: 2%;
+        display: inline-block;
+        &-imgCon {
+            position: absolute;
+            top: 0;
+            height: 70%;
+            width: 100%;
+        }
+        &-img {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+        }
+        &-text {
+            font-size: 30px;
+            
+            position: absolute;
+            top: 80%;
+            width: 100%;
+        }
+    }
+}

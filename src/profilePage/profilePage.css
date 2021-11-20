@@ -1,0 +1,102 @@
+.profilePage-body {
+  position: absolute;
+  width: 100%;
+  height: 900px;
+  background-color: whitesmoke;
+}
+
+.profilePage-wellcomeText {
+  position: relative;
+  height: 100px;
+  width: 100%;
+  background-color: grey;
+  font-size: 50px;
+}
+
+.profilePage-ticketPliceContainer {
+  margin-top: 75px;
+  position: absolute;
+  width: 40%;
+  height: 500px;
+}
+
+.profilePage-ticketText {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  background-color: grey;
+  font-size: 50px;
+}
+
+.profilePage-ticket {
+  position: relative;
+  height: 400px;
+  width: 100%;
+  background-color: hotpink;
+}
+
+.profilePage-exitBut {
+  position: absolute;
+  height: 100px;
+  width: 225px;
+  top: calc(100px);
+  right: calc(0%);
+  font-size: 50px;
+  background-color: #ff6161;
+}
+
+.profilePage-singIn-body {
+  position: absolute;
+  width: 100%;
+  height: 900px;
+  background-color: whitesmoke;
+}
+
+.profilePage-singIn-container {
+  position: absolute;
+  left: 30%;
+  width: 40%;
+  top: 10%;
+  height: 600px;
+  border: 4px solid silver;
+}
+
+.profilePage-singIn-heading {
+  position: relative;
+  top: 0px;
+  height: 15%;
+  width: 100%;
+  text-align: center;
+  font-size: 50px;
+  background-color: snow;
+}
+
+.profilePage-singIn-inputsContainer {
+  position: relative;
+  left: 25%;
+  width: 50%;
+  margin-top: 100px;
+  height: 200px;
+  background-color: snow;
+}
+
+.profilePage-singIn-input {
+  font-size: 50px;
+  border-radius: 12px;
+  position: relative;
+  height: 45%;
+  margin-bottom: 10%;
+  width: 100%;
+}
+
+.profilePage-singIn-okButton {
+  margin-top: 10%;
+  border-radius: 12px;
+  font-size: 60px;
+  position: relative;
+  left: 25%;
+  width: 50%;
+  height: 100px;
+  background-color: #116e11;
+}
+/*# sourceMappingURL=profilePage.css.map */

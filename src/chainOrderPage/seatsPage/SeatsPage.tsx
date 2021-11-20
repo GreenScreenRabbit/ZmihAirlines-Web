@@ -31,8 +31,6 @@ const SeatsPage = (props: PropsType) => {
 
         let k = e.target as HTMLDivElement
 
-        console.log('e')
-        console.log(target.id)
 
         console.log(target!.style.backgroundColor)
         if (props.busySeats.includes(+target.id)) {

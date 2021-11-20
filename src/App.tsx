@@ -9,8 +9,8 @@ import InformationPage from './informationPage/InformationPage'
 import SelectFlights from './chainOrderPage/selectFlights/SelectFlights'
 import { connect } from 'react-redux'
 import { actions } from './actions and const/actions'
+import ProfilePage from './profilePage/ProfilePage'
 
-//function App() {
 
 type PropsType = {
     setRandomBusySeats: (arg0: number[]) => void
@@ -24,7 +24,6 @@ class App extends React.Component<PropsType> {
         for (let i = 0; i < 240; i++) {
             this.allSeatsBlock.push(i)
         }
-        console.log('MDE')
     }
 
     randomingBusySeats = (allSeatsBlock: number[]) => {
@@ -35,13 +34,8 @@ class App extends React.Component<PropsType> {
 
             copiedAllSeatsBlock = [...copiedAllSeatsBlock.slice(0, random), ...copiedAllSeatsBlock.slice(random + 1)]
         }
-
-        console.log('randomBusySeats')
-        console.log(this.randomBusySeats)
-
         this.props.setRandomBusySeats(this.randomBusySeats)
 
-        // return this.randomBusySeats
     }
 
     componentDidMount() {
@@ -50,26 +44,17 @@ class App extends React.Component<PropsType> {
     }
 
     render() {
-        // this.creacteLengthArrayForSeatsBlock()
-        // this.randomingBusySeats(this.allSeatsBlock)
-        // this.props.setRandomBusySeats(this.randomingBusySeats(this.allSeatsBlock))
-        console.log('APP')
 
         return (
-            // <div className="App">
             <>
                 <Header />
-                {/* <Router> */}
                 <Routes>
-                    {/* <Route path="/startPage">
-                            <StartPage />
-                        </Route> */}
-
+                    
                     <Route path="/" element={<StartPage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/informationPage" element={<InformationPage />} />
                     <Route path="/chainOrderPage/*" element={<ChainOrderPage />} />
 
-                    {/* <Route path="/chainOrderPage/selectFlights" element={<SelectFlights />} /> */}
                 </Routes>
             </>
         )

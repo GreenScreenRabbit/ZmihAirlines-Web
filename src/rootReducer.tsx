@@ -1,33 +1,50 @@
 import { combineReducers } from 'redux'
 import { ActionsTypes } from './actions and const/actions'
-import { SELECTED_LANGUAGE, SET_BOOLEAN_CHAIN_PAGE_CORRECT, SET_BUSY_SEATS, SET_INDEX_SELECTED_SEAT } from './actions and const/const'
+import {
+    SELECTED_LANGUAGE,
+    SET_BAGAGE,
+    SET_BOOLEAN_CHAIN_PAGE_CORRECT,
+    SET_BUSY_SEATS,
+    SET_INDEX_SELECTED_SEAT,
+    SET_LOGIN
+} from './actions and const/const'
+import { BagageType } from './chainOrderPage/selectFlights/SelectFlightsTypes'
 
 const initialState: initialStateType = {
-    selectedLanguage: 'EN'
+    selectedLanguage: 'EN',
+    logined: false,
+    ticket: null
 }
 
 type initialStateType = {
     selectedLanguage: string
+    logined: boolean
+    ticket: object | null
 }
 
-//boolean[]
+//logined
 
 type initialChainStateType = {
     chainPagesCorreсt: boolean[]
     busySeats: number[]
     indexSelectedSeat: number | null
+    selectedBagage: BagageType | null 
 }
 
 const initialChainState: initialChainStateType = {
     chainPagesCorreсt: [false, false, false, false],
     busySeats: [],
     indexSelectedSeat: null,
+    selectedBagage: null,
 }
 
 const generalStateReducer = (generalState = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case SELECTED_LANGUAGE: {
             return { ...generalState, selectedLanguage: action.language }
+        }
+        case SET_LOGIN: {
+            return { ...generalState, logined: action.bol }
         }
 
         default:
@@ -46,23 +63,26 @@ const chainStateReducer = (chainState = initialChainState, action: ActionsTypes)
                     ...chainState.chainPagesCorreсt.slice(action.index + 1)
                 ]
             }
-
-            // [...state.filtersForCatalogCategory.slice(0, action.indexFilterForDeleteBrand), ...state.filtersForCatalogCategory.slice(action.indexFilterForDeleteBrand + 1)]
         }
 
         case SET_BUSY_SEATS: {
             return {
                 ...chainState,
-                // busySeats: [action.buseSeats]
-                // busySeats: Object.assign(action.buseSeats)
                 busySeats: [...action.buseSeats]
             }
         }
 
-        case SET_INDEX_SELECTED_SEAT: {
+        case SET_BAGAGE: {
             return{
                 ...chainState,
-                    indexSelectedSeat: action.index
+                selectedBagage: action.item
+            }
+        }
+
+        case SET_INDEX_SELECTED_SEAT: {
+            return {
+                ...chainState,
+                indexSelectedSeat: action.index
             }
         }
 
