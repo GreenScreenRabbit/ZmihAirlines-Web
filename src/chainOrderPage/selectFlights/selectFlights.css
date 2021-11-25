@@ -50,6 +50,7 @@
 }
 
 .selectFlights-buyButton {
+  font-size: 48px;
   position: absolute;
   top: calc(50% - 60px);
   left: calc(50% - 100px);
@@ -178,6 +179,7 @@
 }
 
 .selectFlights-selectBaggage-cartBody-bundleList {
+  font-size: 46px;
   padding: 20px;
   position: absolute;
   top: 40%;
@@ -188,6 +190,7 @@
 }
 
 .selectFlights-selectBaggage-cartBody-buyButton {
+  font-size: 48px;
   position: absolute;
   top: 85%;
   width: 80%;

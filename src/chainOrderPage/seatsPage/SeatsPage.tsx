@@ -31,18 +31,12 @@ const SeatsPage = (props: PropsType) => {
 
         let k = e.target as HTMLDivElement
 
-
         console.log(target!.style.backgroundColor)
         if (props.busySeats.includes(+target.id)) {
             setIsBoxCorrect(false)
         } else {
             setIsBoxCorrect(true)
         }
-        // if (target!.style.backgroundColor == 'rgb(255, 38, 0)') {
-        //     setIsBoxCorrect(false)
-        // } else if ('green') {
-        //     setIsBoxCorrect(false)
-        // }
     }
 
     const boxsColor = (item: number) => {
@@ -86,6 +80,7 @@ const SeatsPage = (props: PropsType) => {
                             setOpenPopUpBox(!openPopUpBox)
                             cheadIsBoxCorrect(e)
                         }}></div>
+                    {props.indexSelectedSeat == item ? <div className="seatsPage-seatBlock-circle"></div> : null}
                     {indexClicedBox == index ? (
                         openPopUpBox ? (
                             <div className="seatsPage-popUp">
@@ -94,11 +89,13 @@ const SeatsPage = (props: PropsType) => {
                                 </div>
                                 {isBoxCorrect ? (
                                     <div className="seatsPage-popUp-bodyPos">
-                                        TRUE
                                         <div className="seatsPage-popUp-addSeatText">SELECT THIS SEAT ?</div>
                                         <div
                                             className="seatsPage-popUp-addButton"
-                                            onClick={() => props.setIndexDelectedSeat(item)}>
+                                            onClick={() => {
+                                                props.setIndexDelectedSeat(item)
+                                                setOpenPopUpBox(false)
+                                            }}>
                                             SELECT
                                         </div>
                                         {props.setIndexDelectedSeat}
@@ -172,7 +169,9 @@ const SeatsPage = (props: PropsType) => {
                     </Row>
                 </div>
                 <Link to="../payout">
-                    <button className="seatsPage-nextButton">NEXT</button>
+                    <button className="seatsPage-nextButton" disabled={props.indexSelectedSeat != null ? false : true}>
+                        NEXT
+                    </button>
                 </Link>
             </div>
         </>

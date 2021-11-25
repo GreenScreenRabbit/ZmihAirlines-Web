@@ -134,5 +134,15 @@
         height: 100%;
         width: 100%;
         padding: 30px;
+        &-price{
+            position: relative;
+            text-align: center;
+            width: 100%;
+            background-color: slategray;
+        }&-text{
+            position: relative;
+            height: 80%;
+            width: 100%;
+        }
     }
 }

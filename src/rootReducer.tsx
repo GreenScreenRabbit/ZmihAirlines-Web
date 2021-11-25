@@ -8,7 +8,7 @@ import {
     SET_INDEX_SELECTED_SEAT,
     SET_LOGIN
 } from './actions and const/const'
-import { BagageType } from './chainOrderPage/selectFlights/SelectFlightsTypes'
+import { BagageStateType, BagageType } from './chainOrderPage/selectFlights/SelectFlightsTypes'
 
 const initialState: initialStateType = {
     selectedLanguage: 'EN',
@@ -28,7 +28,8 @@ type initialChainStateType = {
     chainPagesCorreсt: boolean[]
     busySeats: number[]
     indexSelectedSeat: number | null
-    selectedBagage: BagageType | null 
+    //TODO CHANGE
+    selectedBagage: BagageStateType | null 
 }
 
 const initialChainState: initialChainStateType = {

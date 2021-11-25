@@ -132,4 +132,17 @@
   width: 100%;
   padding: 30px;
 }
+
+.Yourbaggage-infornationContainer-price {
+  position: relative;
+  text-align: center;
+  width: 100%;
+  background-color: slategray;
+}
+
+.Yourbaggage-infornationContainer-text {
+  position: relative;
+  height: 80%;
+  width: 100%;
+}
 /*# sourceMappingURL=passengerPage.css.map */

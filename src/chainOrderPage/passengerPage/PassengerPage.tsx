@@ -1,12 +1,18 @@
 import { useRef, useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import { connect } from 'react-redux'
+import { connect, RootStateOrAny } from 'react-redux'
 import { Link } from 'react-router-dom'
 import someIcon from '../../someIcon.jpg'
+import { BagageStateType } from '../selectFlights/SelectFlightsTypes'
 import './passengerPage.css'
 
-const PassengerPage = () => {
+type PropsType = {
+    selectedBagage?: BagageStateType
+}
 
+const PassengerPage = (props: PropsType) => {
+    console.log('selectedBagage')
+    console.log(props.selectedBagage)
 
     const firstNameRegExp = new RegExp('\\w{3}')
     const lastNameRegExp = new RegExp('\\w{4}')
@@ -68,7 +74,14 @@ const PassengerPage = () => {
                             </div>
                         </Col>
                         <Col md={{ span: 7 }}>
-                            <div className="Yourbaggage-infornationContainer">INFOO</div>
+                            <div className="Yourbaggage-infornationContainer">
+                                <div className="Yourbaggage-infornationContainer-text">
+                                    {props.selectedBagage?.text}
+                                </div>
+                                <div className="Yourbaggage-infornationContainer-price">
+                                    Price : {props.selectedBagage?.price} $
+                                </div>
+                            </div>
                         </Col>
                     </Row>
                     <Link to="../seats">
@@ -80,4 +93,8 @@ const PassengerPage = () => {
     )
 }
 
-export default connect(null, null)(PassengerPage)
+const mapStateToProps = (state: RootStateOrAny) => ({
+    selectedBagage: state.chainState.selectedBagage
+})
+
+export default connect(mapStateToProps, null)(PassengerPage)

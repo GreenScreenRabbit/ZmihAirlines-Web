@@ -5,19 +5,23 @@ import './selectFlights.css'
 import someIcon from '../../someIcon.jpg'
 import { Link } from 'react-router-dom'
 import { actions } from '../../actions and const/actions'
-import { BagageType } from './SelectFlightsTypes'
+import { BagageStateType, BagageType } from './SelectFlightsTypes'
 import { selectLanguage } from '../../selectLanguage'
 import { LanguageType } from '../../languageType'
 
 type PropsType = {
     selectedLanguage: LanguageType
     //TODO TYPE THIS NORMAL
-    setSelectedBagage: (arg0: BagageType) => void
+    setSelectedBagage: (arg0: BagageStateType) => void
 }
 
 const SelectFlights = (props: PropsType) => {
     enum LanguageBagageType {
         bagageText = 'bagageText'
+    }
+    enum LanguageJustTextType {
+        selectBundleButText = 'selectBundleButText',
+        buyButton = 'buyButton'
     }
 
     enum LanguageBagageTextType {
@@ -26,23 +30,30 @@ const SelectFlights = (props: PropsType) => {
         ultraPremium = 'ultraPremium'
     }
 
-
-
-    type LanguageObjectsText = {
+    type LanguageObjBagageText = {
         [keyof in LanguageBagageType]: { [keyof in LanguageBagageTextType]: string }
     }
 
-    type LanguageTextType<T> = {
-        [keyof in LanguageType]: T
-        // [keyof in LanguageType]: { [keyof in LanguageBagageType]: { [keyof in LanguageBagageTextType]: string } }
-
-        // { [keyof in LanguageBagageType]: { [keyof in LanguageBagageTextType]: string } }
-
- 
-        // [keyof in LanguageBagageType]: { [keyof in LanguageBagageTextType]: string }
-
+    type LanguageObjTextJustText = {
+        [keyof in LanguageJustTextType]: string
     }
 
+    type LanguageObjectsText = LanguageObjBagageText & LanguageObjTextJustText
+
+    type LanguageTextType<T> = {
+        [keyof in LanguageType]: T
+    }
+
+    const createObjBagageForState = (name: BagageType, text: string,price:number) => {
+        const objBagage: BagageStateType = {
+            name,
+            text,
+            price
+        }
+        console.log(objBagage)
+        props.setSelectedBagage(objBagage)
+        return objBagage
+    }
 
     let languageText: LanguageTextType<LanguageObjectsText> = {
         EN: {
@@ -50,42 +61,24 @@ const SelectFlights = (props: PropsType) => {
                 basic: 'Its bagage is default',
                 premium: 'Its bagage is premium',
                 ultraPremium: 'Its bagage is ultra premium'
-            }
+            },
+            selectBundleButText: 'select your bundle',
+            buyButton: 'SELECT'
         },
         RU: {
             bagageText: {
                 basic: 'Просто багаж',
                 premium: 'Это премиум багаж',
                 ultraPremium: 'А вот это уже ультра премиум'
-            }
+            },
+            selectBundleButText: 'выберите тип багажа',
+            buyButton: 'ВЫБРАТЬ'
         }
     }
 
-    // let SelectFlightsTypeConst: ReturnType<typeof selectLanguage> = selectLanguage(languageText, props.selectedLanguage)
-
-    // type SelectFlightsType = typeof SelectFlightsTypeConst
-
     let selecteLanguageText = selectLanguage(languageText, props.selectedLanguage)
 
-
-    console.log('selecteLanguageText')
-    console.log(selecteLanguageText?.bagageText)
-
-    //TODO а вот тут тоже типизацию норм сделать
-    const selectDesiredLanguage = (languageObj: object) => {
-        let languageAr: string[] = Object.keys(languageObj)
-
-        let selectedLenguage: string = ''
-
-        languageAr.forEach((language) => {
-            if (language == props.selectedLanguage) {
-                selectedLenguage = language
-            }
-        })
-    }
-    selectDesiredLanguage(languageText)
-
-    const selectBaggageRef = useRef(null)
+    console.log(selecteLanguageText)
 
     const [isSelectBaggageOpen, setIsSelectBaggageOpen] = useState<boolean>(false)
     const [isBaggageSelected, setIsBaggageSelected] = useState<boolean>(false)
@@ -126,20 +119,20 @@ const SelectFlights = (props: PropsType) => {
                                         CHANGE
                                     </div>
                                 ) : (
-                                    <div className="selectFlights-selectYourBundle">select your bundle</div>
+                                    <div className="selectFlights-selectYourBundle">
+                                        {selecteLanguageText.selectBundleButText}
+                                    </div>
                                 )
-                            ) : // selectFlights-selectedBundle
-
-                            isBaggageSelected ? (
+                            ) : isBaggageSelected ? (
                                 <div
                                     className="selectFlights-selectedBundle"
                                     onClick={() => setIsSelectBaggageOpen(!isSelectBaggageOpen)}>
                                     CHANGE
                                 </div>
                             ) : (
-                                <div
-                                    onClick={() => setIsSelectBaggageOpen(true)}
-                                    className="selectFlights-buyButton"></div>
+                                <div onClick={() => setIsSelectBaggageOpen(true)} className="selectFlights-buyButton">
+                                    {selecteLanguageText.buyButton}
+                                </div>
                             )}
                         </div>
                     </div>
@@ -154,14 +147,24 @@ const SelectFlights = (props: PropsType) => {
                                     <div className="selectFlights-selectBaggage-cartBody-iconContainer">
                                         <img src={someIcon} className="selectFlights-selectBaggage-cartBody-icon" />
                                     </div>
-                                    <div className="selectFlights-selectBaggage-cartBody-bundleList"></div>
+                                    <div className="selectFlights-selectBaggage-cartBody-bundleList">
+                                        {selecteLanguageText.bagageText.basic}
+                                        <div className="">Prise: 50$</div>
+                                    </div>
                                     <div
                                         className="selectFlights-selectBaggage-cartBody-buyButton"
                                         onClick={() => {
-                                            props.setSelectedBagage(BagageType.BASIC)
+                                            createObjBagageForState(
+                                                BagageType.BASIC,
+                                                selecteLanguageText.bagageText.basic,
+                                                50
+                                            )
+                                            // selecteLanguageText.bagageText.basic
                                             setIsBaggageSelected(true)
                                             setIsSelectBaggageOpen(false)
-                                        }}></div>
+                                        }}>
+                                        {selecteLanguageText.buyButton}
+                                    </div>
                                 </div>
                             </Col>
 
@@ -173,14 +176,24 @@ const SelectFlights = (props: PropsType) => {
                                     <div className="selectFlights-selectBaggage-cartBody-iconContainer">
                                         <img src={someIcon} className="selectFlights-selectBaggage-cartBody-icon" />
                                     </div>
-                                    <div className="selectFlights-selectBaggage-cartBody-bundleList"></div>
+                                    <div className="selectFlights-selectBaggage-cartBody-bundleList">
+                                        {selecteLanguageText.bagageText.premium}
+                                        <div className="">Prise: 100$</div>
+                                    </div>
                                     <div
                                         className="selectFlights-selectBaggage-cartBody-buyButton"
                                         onClick={() => {
-                                            props.setSelectedBagage(BagageType.PREMIUM)
+                                            createObjBagageForState(
+                                                BagageType.PREMIUM,
+                                                selecteLanguageText.bagageText.premium,
+                                                100
+                                            )
+
                                             setIsBaggageSelected(true)
                                             setIsSelectBaggageOpen(false)
-                                        }}></div>
+                                        }}>
+                                        {selecteLanguageText.buyButton}
+                                    </div>
                                 </div>
                             </Col>
                             <Col style={{ zIndex: 3 }}>
@@ -191,14 +204,25 @@ const SelectFlights = (props: PropsType) => {
                                     <div className="selectFlights-selectBaggage-cartBody-iconContainer">
                                         <img src={someIcon} className="selectFlights-selectBaggage-cartBody-icon" />
                                     </div>
-                                    <div className="selectFlights-selectBaggage-cartBody-bundleList"></div>
+                                    <div className="selectFlights-selectBaggage-cartBody-bundleList">
+                                        {selecteLanguageText.bagageText.ultraPremium}
+                                        <div className="">Prise: 150$</div>
+                                    </div>
                                     <div
                                         className="selectFlights-selectBaggage-cartBody-buyButton"
                                         onClick={() => {
-                                            props.setSelectedBagage(BagageType.ULTRAPREMIUM)
+                                            createObjBagageForState(
+                                                BagageType.ULTRAPREMIUM,
+                                                selecteLanguageText.bagageText.ultraPremium,
+                                                150
+                                                
+                                            )
+
                                             setIsBaggageSelected(true)
                                             setIsSelectBaggageOpen(false)
-                                        }}></div>
+                                        }}>
+                                        {selecteLanguageText.buyButton}
+                                    </div>
                                 </div>
                             </Col>
                         </Row>

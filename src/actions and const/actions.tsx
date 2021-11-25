@@ -1,4 +1,4 @@
-import { BagageType } from '../chainOrderPage/selectFlights/SelectFlightsTypes'
+import { BagageStateType, BagageType } from '../chainOrderPage/selectFlights/SelectFlightsTypes'
 import {
     SELECTED_LANGUAGE,
     SET_BAGAGE,
@@ -18,7 +18,7 @@ export const actions = {
     setRandomBusySeats: (buseSeats: number[]) => ({ type: SET_BUSY_SEATS, buseSeats } as const),
     setIndexDelectedSeat: (index: number) => ({ type: SET_INDEX_SELECTED_SEAT, index } as const),
     setLogIn: (bol: boolean) => ({ type: SET_LOGIN, bol } as const),
-    setSelectedBagage: (item: BagageType) => ({ type: SET_BAGAGE, item } as const),
+    setSelectedBagage: (item: BagageStateType) => ({ type: SET_BAGAGE, item } as const),
 }
 
 export type ActionsTypes = GetActionsTypes<typeof actions>

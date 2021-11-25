@@ -48,6 +48,7 @@
         background-color: palevioletred;
     }
     &-buyButton {
+        font-size: 48px;
         position: absolute;
         top: calc(50% - 60px);
         left: calc(50% - 100px);
@@ -174,6 +175,7 @@
                 width: 100%;
             }
             &-bundleList {
+                font-size: 46px;
                 padding: 20px;
                 position: absolute;
                 top: 40%;
@@ -183,6 +185,7 @@
                 background-color: rgb(226, 224, 224);
             }
             &-buyButton {
+                font-size: 48px;
                 position: absolute;
                 top: 85%;
                 width: 80%;

@@ -3,3 +3,5 @@ export enum BagageType {
     PREMIUM = 'PREMIUM',
     ULTRAPREMIUM = 'ULTRAPREMIUM'
 }
+
+export type BagageStateType = {name: BagageType , text: string,price:number}
