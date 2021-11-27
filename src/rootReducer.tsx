@@ -8,18 +8,26 @@ import {
     SET_INDEX_SELECTED_SEAT,
     SET_LOGIN
 } from './actions and const/const'
-import { BagageStateType, BagageType } from './chainOrderPage/selectFlights/SelectFlightsTypes'
+import { airType } from './airType'
+import { BagageStateType } from './chainOrderPage/selectFlights/SelectFlightsTypes'
+import { fakeAPI_Air } from './fakeAPI_Air'
 
 const initialState: initialStateType = {
     selectedLanguage: 'EN',
     logined: false,
-    ticket: null
-}
+    ticket: null,
+    indexAirFrom: 0,
+    indexAirTo: 1,
+    airsArray: fakeAPI_Air
+} 
 
 type initialStateType = {
     selectedLanguage: string
     logined: boolean
     ticket: object | null
+    indexAirFrom: number
+    indexAirTo: number
+    airsArray: airType[]
 }
 
 //logined
@@ -29,14 +37,14 @@ type initialChainStateType = {
     busySeats: number[]
     indexSelectedSeat: number | null
     //TODO CHANGE
-    selectedBagage: BagageStateType | null 
+    selectedBagage: BagageStateType | null
 }
 
 const initialChainState: initialChainStateType = {
     chainPagesCorreсt: [false, false, false, false],
     busySeats: [],
     indexSelectedSeat: null,
-    selectedBagage: null,
+    selectedBagage: null
 }
 
 const generalStateReducer = (generalState = initialState, action: ActionsTypes) => {
@@ -74,7 +82,7 @@ const chainStateReducer = (chainState = initialChainState, action: ActionsTypes)
         }
 
         case SET_BAGAGE: {
-            return{
+            return {
                 ...chainState,
                 selectedBagage: action.item
             }

@@ -4,7 +4,7 @@ import Ordering from './ordering/Ordering'
 import CompanyText from './companyText/CompanyText'
 import Advertisings from './advertisings/Advertisings'
 
-const StartPage = (props:any) => {
+const StartPage = () => {
     return (
         <>
             <div className="startPage">
