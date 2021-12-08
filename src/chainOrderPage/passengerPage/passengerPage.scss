@@ -70,6 +70,10 @@
             top: calc(50% - 40px);
             height: 80px;
             width: 350px;
+            // transition: all 1s;
+            &.entering {
+                animation: unCorrect 0.3s none;
+            }
         }
         &-sexContainer {
             position: absolute;
@@ -81,6 +85,9 @@
 
             display: inline-block;
             background-color: red;
+            &.entering {
+                animation: unCorrectGender 0.3s none;
+            }
         }
         &-buttonSelectSex {
             position: relative;
@@ -134,15 +141,67 @@
         height: 100%;
         width: 100%;
         padding: 30px;
-        &-price{
+        &-price {
             position: relative;
             text-align: center;
             width: 100%;
             background-color: slategray;
-        }&-text{
+        }
+        &-text {
             position: relative;
             height: 80%;
             width: 100%;
         }
+    }
+}
+
+
+@keyframes unCorrectGender {
+    0% {
+        margin-top: 0px;
+    }
+    25% {
+        margin-top: 25px;
+    }
+    50% {
+        margin-top: 0px;
+    }
+    75% {
+        margin-top: -25px;
+    }
+    100% {
+        margin-top: 0px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+@keyframes unCorrect {
+    0% {
+        // margin-top: 0px;
+        top: 0px;
+    }
+    25% {
+        // margin-top: 25px;
+        top: 25px;
+    }
+    50% {
+        // margin-top: 0px;
+        top: 0px;
+    }
+    75% {
+        // margin-top: -25px;
+        top: -25px;
+    }
+    100% {
+        // margin-top: 0px;
+        top: 0px;
     }
 }

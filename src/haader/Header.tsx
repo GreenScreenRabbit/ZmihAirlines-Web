@@ -17,31 +17,44 @@ const Header = (props: PropsType) => {
     console.log('url')
     console.log(url)
 
-
-
     return (
         <>
             <div className="header">
                 <Link to="informationPage">
-                    <div className="">5</div>
+                    <div className="" style={{ top: '50%', position: 'absolute', left: '70%' }}>
+                        <div className="informationPage">INFORMATION</div>
+                    </div>
+                </Link>
+                <Link to="">
+                    <div className="" style={{ top: '50%', position: 'absolute', left: '5%' }}>
+                        <div className="mainBut">Main</div>
+                    </div>
                 </Link>
                 <Link to="profile">
-                    <div className="">Profile</div>
-                </Link>
-                <div className="header-chooseLanguage-dropItemsContainer">
-                    <div className="header-chooseLanguage" onClick={() => setIsOpenDropMenu(!isOpenDropMenu)}>
-                        {props.selectedLanguage}
+                    <div className="" style={{ top: '50%', position: 'absolute', left: '55%' }}>
+                        <div className="profile">Profile</div>
                     </div>
-                    {isOpenDropMenu ? (
-                        <>
-                            <div className="header-chooseLanguage-item" onClick={() => props.setSelectedLanguage('EN')}>
-                                EN
-                            </div>
-                            <div className="header-chooseLanguage-item" onClick={() => props.setSelectedLanguage('RU')}>
-                                RU
-                            </div>
-                        </>
-                    ) : null}
+                </Link>
+                <div className="" style={{ top: '25%', position: 'absolute', left: '75%' }}>
+                    <div className="header-chooseLanguage-dropItemsContainer">
+                        <div className="header-chooseLanguage" onClick={() => setIsOpenDropMenu(!isOpenDropMenu)}>
+                            {props.selectedLanguage}
+                        </div>
+                        {isOpenDropMenu ? (
+                            <>
+                                <div
+                                    className="header-chooseLanguage-item"
+                                    onClick={() => props.setSelectedLanguage('EN')}>
+                                    EN
+                                </div>
+                                <div
+                                    className="header-chooseLanguage-item"
+                                    onClick={() => props.setSelectedLanguage('RU')}>
+                                    RU
+                                </div>
+                            </>
+                        ) : null}
+                    </div>
                 </div>
             </div>
         </>

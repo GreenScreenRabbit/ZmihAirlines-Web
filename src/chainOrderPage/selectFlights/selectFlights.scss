@@ -9,17 +9,28 @@
     &-continueButton {
         &-body {
             position: relative;
-            left: 70%;
+            height: 150px;
+            width: 300px;
+            background-color: rgb(89, 89, 255);
+            transform: translate(-50%,-50%);
+            left: 80%;
+            top: 50%;
+            // position: relative;
+            // left: 70%;
             font-size: 90px;
             vertical-align: middle;
             text-align: center;
-            top: 75px;
-            height: 150px;
-            width: 300px;
-            text-decoration: none;
-            border-bottom: 0px;
             color: black;
-            background-color: palevioletred;
+            // top: 75px;
+            // height: 150px;
+            // width: 300px;
+            // border-bottom: 0px;
+            // color: black;
+            // background-color: palevioletred;
+            transition: all 2s;
+            &:hover{
+                background-color: blue;
+            }
         }
         &-container {
             position: relative;

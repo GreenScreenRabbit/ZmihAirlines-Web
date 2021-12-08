@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import './confirmedPopUp.css'
 
 type PropsType = {
@@ -10,9 +11,11 @@ const ConfirmedPopUp = (props: PropsType) => {
         <>
             <div className="confirmedPopUp-backWallpaper"></div>
             <div className="confirmedPopUp-body">
-                <button className="confirmedPopUp-inToProfile" onClick={() => props.setRenderPopUp(false)}>
-                    PROFILE
-                </button>
+                <Link to="/profile">
+                    <button className="confirmedPopUp-inToProfile" onClick={() => props.setRenderPopUp(false)}>
+                        PROFILE
+                    </button>
+                </Link>
                 <button className="confirmedPopUp-okButton" onClick={() => props.setRenderPopUp(false)}>
                     OK
                 </button>

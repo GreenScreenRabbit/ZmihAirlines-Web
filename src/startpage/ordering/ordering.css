@@ -46,7 +46,19 @@
 }
 
 .ordering-searchButton {
+  border: 0px;
+  height: 100%;
+  width: 100%;
   background-color: #f88fa1;
+  -webkit-transition: background-color 2s;
+  transition: background-color 2s;
+  border: #777474 4px solid;
+}
+
+.ordering-searchButton:hover {
+  -webkit-transition: background-color 2s;
+  transition: background-color 2s;
+  background-color: #d63d57;
 }
 
 .ordering-selectDate {
@@ -237,6 +249,22 @@
   font-size: 40px;
 }
 
+.ordering-selectDeparture-fromToContainer-itemDrop-price {
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  top: 70%;
+  left: 75%;
+  font-size: 24px;
+  color: #5d6063;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .ordering-selectDeparture-fromToContainer-from {
   position: relative;
   display: inline-block;
@@ -259,6 +287,30 @@
   overflow-y: scroll;
 }
 
+.ordering-selectDeparture-fromToContainer-toPrice {
+  position: absolute;
+  top: 0%;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.ordering-selectDeparture-fromToContainer-toPrice-symbols {
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  left: 40%;
+  font-size: 30px;
+  color: #787c7c;
+  top: 70%;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .ordering-selectDeparture-fromToContainer-to {
   position: relative;
   display: inline-block;
@@ -266,6 +318,23 @@
   width: 50%;
   font-size: 60px;
   background-color: whitesmoke;
+}
+
+.ordering-selectDeparture-fromToContainer-to-symbol {
+  position: absolute;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  left: 90%;
+  white-space: nowrap;
+  font-size: 30px;
+  color: #787c7c;
+  top: 70%;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .ordering-selectDeparture-fromToContainer-to-dropMenu {

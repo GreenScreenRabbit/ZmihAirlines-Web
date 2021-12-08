@@ -1,16 +1,20 @@
 import { combineReducers } from 'redux'
-import { ActionsTypes } from './actions and const/actions'
+import { actions, ActionsTypes } from './actions and const/actions'
 import {
     SELECTED_LANGUAGE,
     SET_BAGAGE,
     SET_BOOLEAN_CHAIN_PAGE_CORRECT,
     SET_BUSY_SEATS,
+    SET_DATA_CALENDAR,
     SET_INDEX_SELECTED_SEAT,
-    SET_LOGIN
+    SET_LOGIN,
+    SET_SELECTED_FROM_AIR,
+    SET_SELECTED_TO_AIR
 } from './actions and const/const'
 import { airType } from './airType'
 import { BagageStateType } from './chainOrderPage/selectFlights/SelectFlightsTypes'
 import { fakeAPI_Air } from './fakeAPI_Air'
+import { SelectedDataCalendar } from './startpage/ordering/orderingTypes'
 
 const initialState: initialStateType = {
     selectedLanguage: 'EN',
@@ -19,7 +23,7 @@ const initialState: initialStateType = {
     indexAirFrom: 0,
     indexAirTo: 1,
     airsArray: fakeAPI_Air
-} 
+}
 
 type initialStateType = {
     selectedLanguage: string
@@ -36,15 +40,20 @@ type initialChainStateType = {
     chainPagesCorreсt: boolean[]
     busySeats: number[]
     indexSelectedSeat: number | null
-    //TODO CHANGE
     selectedBagage: BagageStateType | null
+    selectedDataCalendar: SelectedDataCalendar
+    selectedFromAir: null | airType
+    selectedToAir: null | airType
 }
 
 const initialChainState: initialChainStateType = {
     chainPagesCorreсt: [false, false, false, false],
     busySeats: [],
     indexSelectedSeat: null,
-    selectedBagage: null
+    selectedBagage: null,
+    selectedDataCalendar: { day: 1, month: 'December', year: 2022 },
+    selectedFromAir: null,
+    selectedToAir: null
 }
 
 const generalStateReducer = (generalState = initialState, action: ActionsTypes) => {
@@ -93,6 +102,24 @@ const chainStateReducer = (chainState = initialChainState, action: ActionsTypes)
                 ...chainState,
                 indexSelectedSeat: action.index
             }
+        }
+
+        case SET_DATA_CALENDAR: {
+            return {
+                ...chainState,
+                selectedDataCalendar: action.data
+            }
+        }
+
+        case SET_SELECTED_FROM_AIR: {
+            return {
+                ...chainState,
+                selectedFromAir: action.payload
+            }
+        }
+
+        case SET_SELECTED_TO_AIR: {
+            return { ...chainState, selectedToAir: action.payload }
         }
 
         default:

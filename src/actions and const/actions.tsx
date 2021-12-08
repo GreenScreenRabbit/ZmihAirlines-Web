@@ -1,11 +1,16 @@
+import { airType } from '../airType'
 import { BagageStateType, BagageType } from '../chainOrderPage/selectFlights/SelectFlightsTypes'
+import { SelectedDataCalendar } from '../startpage/ordering/orderingTypes'
 import {
     SELECTED_LANGUAGE,
     SET_BAGAGE,
     SET_BOOLEAN_CHAIN_PAGE_CORRECT,
     SET_BUSY_SEATS,
+    SET_DATA_CALENDAR,
     SET_INDEX_SELECTED_SEAT,
-    SET_LOGIN
+    SET_LOGIN,
+    SET_SELECTED_FROM_AIR,
+    SET_SELECTED_TO_AIR
 } from './const'
 
 type PropertiesType<T> = T extends { [key: string]: infer U } ? U : never
@@ -19,6 +24,9 @@ export const actions = {
     setIndexDelectedSeat: (index: number) => ({ type: SET_INDEX_SELECTED_SEAT, index } as const),
     setLogIn: (bol: boolean) => ({ type: SET_LOGIN, bol } as const),
     setSelectedBagage: (item: BagageStateType) => ({ type: SET_BAGAGE, item } as const),
+    setDataCalendar: (data: SelectedDataCalendar) => ({ type: SET_DATA_CALENDAR, data} as const),
+    setSelectedFromAir: (payload: airType) => ({ type: SET_SELECTED_FROM_AIR, payload} as const),
+    setSelectedToAir: (payload: airType) => ({ type: SET_SELECTED_TO_AIR, payload} as const),
 }
 
 export type ActionsTypes = GetActionsTypes<typeof actions>

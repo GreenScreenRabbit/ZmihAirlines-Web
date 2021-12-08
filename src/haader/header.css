@@ -36,4 +36,34 @@
   width: 180px;
   background-color: salmon;
 }
+
+.informationPage {
+  display: table-cell;
+  position: relative;
+  vertical-align: middle;
+  height: 75px;
+  text-align: center;
+  font-size: 24px;
+  width: 200px;
+  background-color: azure;
+  left: 10%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+.profile, .mainBut {
+  display: table-cell;
+  position: relative;
+  vertical-align: middle;
+  height: 75px;
+  text-align: center;
+  font-size: 24px;
+  width: 200px;
+  background-color: azure;
+  left: 10%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
 /*# sourceMappingURL=header.css.map */

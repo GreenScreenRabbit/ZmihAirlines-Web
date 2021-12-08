@@ -7,17 +7,23 @@
 
 .selectFlights-continueButton-body {
   position: relative;
-  left: 70%;
+  height: 150px;
+  width: 300px;
+  background-color: #5959ff;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  left: 80%;
+  top: 50%;
   font-size: 90px;
   vertical-align: middle;
   text-align: center;
-  top: 75px;
-  height: 150px;
-  width: 300px;
-  text-decoration: none;
-  border-bottom: 0px;
   color: black;
-  background-color: palevioletred;
+  -webkit-transition: all 2s;
+  transition: all 2s;
+}
+
+.selectFlights-continueButton-body:hover {
+  background-color: blue;
 }
 
 .selectFlights-continueButton-container {

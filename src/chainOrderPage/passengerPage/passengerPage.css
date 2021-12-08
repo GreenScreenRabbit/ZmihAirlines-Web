@@ -78,6 +78,11 @@
   width: 350px;
 }
 
+.passengerPage-personalityData-input.entering {
+  -webkit-animation: unCorrect 0.3s none;
+          animation: unCorrect 0.3s none;
+}
+
 .passengerPage-personalityData-sexContainer {
   position: absolute;
   top: calc(50% - 40px);
@@ -85,6 +90,11 @@
   width: 40%;
   display: inline-block;
   background-color: red;
+}
+
+.passengerPage-personalityData-sexContainer.entering {
+  -webkit-animation: unCorrectGender 0.3s none;
+          animation: unCorrectGender 0.3s none;
 }
 
 .passengerPage-personalityData-buttonSelectSex {
@@ -144,5 +154,77 @@
   position: relative;
   height: 80%;
   width: 100%;
+}
+
+@-webkit-keyframes unCorrectGender {
+  0% {
+    margin-top: 0px;
+  }
+  25% {
+    margin-top: 25px;
+  }
+  50% {
+    margin-top: 0px;
+  }
+  75% {
+    margin-top: -25px;
+  }
+  100% {
+    margin-top: 0px;
+  }
+}
+
+@keyframes unCorrectGender {
+  0% {
+    margin-top: 0px;
+  }
+  25% {
+    margin-top: 25px;
+  }
+  50% {
+    margin-top: 0px;
+  }
+  75% {
+    margin-top: -25px;
+  }
+  100% {
+    margin-top: 0px;
+  }
+}
+
+@-webkit-keyframes unCorrect {
+  0% {
+    top: 0px;
+  }
+  25% {
+    top: 25px;
+  }
+  50% {
+    top: 0px;
+  }
+  75% {
+    top: -25px;
+  }
+  100% {
+    top: 0px;
+  }
+}
+
+@keyframes unCorrect {
+  0% {
+    top: 0px;
+  }
+  25% {
+    top: 25px;
+  }
+  50% {
+    top: 0px;
+  }
+  75% {
+    top: -25px;
+  }
+  100% {
+    top: 0px;
+  }
 }
 /*# sourceMappingURL=passengerPage.css.map */

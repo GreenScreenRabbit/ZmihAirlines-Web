@@ -5,18 +5,22 @@ import { Link } from 'react-router-dom'
 import './ordering.css'
 import axios from 'axios'
 import { airType } from '../../airType'
+import { actions } from '../../actions and const/actions'
+import { SelectedDataCalendar } from './orderingTypes'
+import { useLocation, useNavigate } from 'react-router'
 
 interface PropsType {
     airsArray: airType[]
     indexAirTo: number
     indexAirFrom: number
+    setDataCalendar: (arg0: SelectedDataCalendar) => void
+    selectedDataCalendar: SelectedDataCalendar
+    setSelectedFromAir: (arg0: airType) => void
+    setSelectedToAir: (arg0: airType) => void
 }
 
 const Ordering = (props: PropsType) => {
-    enum mouthCalendarType {
-        firstMouth = 'firstMouth',
-        secondMouth = 'secondMouth'
-    }
+    const location = useLocation()
 
     const monthArray = [
         'January',
@@ -44,10 +48,15 @@ const Ordering = (props: PropsType) => {
     const [fromAirInputValue, setFromAirInputValue] = useState<string>('')
     const [toAirInputValue, setToAirInputValue] = useState<string>('')
 
+    const navigate = useNavigate()
+
+    const fromAirInputRef = useRef(null)
+    const toAirInputRef = useRef(null)
+
     const [fromAirDropMenu, setFromAirDropMenu] = useState<boolean>(false)
     const [toAirDropMenu, setToAirDropMenu] = useState<boolean>(false)
 
-    const [isEmptyFromAir, setIsEmptyFromAir] = useState<boolean>(false)
+    const [isAllInputsCorrect, setIsAllInputsCorrect] = useState<boolean>(false)
 
     let regExpFromAirInputValue = new RegExp(`${fromAirInputValue}`, `i`)
     let regExpToAirInputValue = new RegExp(`${toAirInputValue}`, `i`)
@@ -55,31 +64,53 @@ const Ordering = (props: PropsType) => {
     let isYearExceeds = false
     let shortageYear = false
 
-    const fromDropMenuRef = useRef<HTMLDivElement>(null)
-
     const selectMouthAndChangeColor = (mouth: number, mouthCalendar: number) => {
         setselectedDayCalendar(mouth)
         setselectedMouthCalendar(mouthCalendar)
         setIsDataSelected(true)
     }
 
-    const renderMonthBox = (mouthArray: number[], mouthNumber: number) => {
+    const indexDisableDays: number[] = []
+
+    const renderMonthBox = (mouthArray: number[], mouthNumber: number, thisYear: number) => {
         return (
             <div className="ordering-selectDate-popUpCalendar-monthsContainer-monthCon">
                 <div className="ordering-selectDate-popUpCalendar-monthsContainer-month">{monthArray[mouthNumber]}</div>
                 <div className="ordering-selectDate-popUpCalendar-monthsContainer-monthNumberCon">
-                    {mouthArray.map((item) => {
+                    {mouthArray.map((item, index) => {
+                        let isSelected: boolean = false
+
+                        if (
+                            item == props.selectedDataCalendar.day &&
+                            monthArray[mouthNumber] == props.selectedDataCalendar.month &&
+                            thisYear == props.selectedDataCalendar.year
+                        ) {
+                            isSelected = true
+                        }
+
+                        let isDisabledDay: boolean = false
+
+                        if (indexDisableDays[index] != undefined && thisTime.getMonth() == month) {
+                            if (thisTime.getMonth() == mouthNumber) {
+                                if (thisTime.getFullYear() == thisYear) isDisabledDay = true
+                            }
+                        }
+
                         return (
                             <div
                                 style={{
-                                    backgroundColor:
-                                        selectedDayCalendar == item && selectedMouthCalendar == mouthNumber
-                                            ? 'purple'
-                                            : 'white'
+                                    backgroundColor: isDisabledDay ? 'black' : isSelected ? 'purple' : 'white'
                                 }}
                                 className="ordering-selectDate-popUpCalendar-monthsContainer-monthNumber"
                                 onClick={() => {
-                                    selectMouthAndChangeColor(item, mouthNumber)
+                                    !isDisabledDay && selectMouthAndChangeColor(item, mouthNumber)
+                                    !isDisabledDay && selectMouthAndChangeColor(item, mouthNumber)
+                                    !isDisabledDay &&
+                                        props.setDataCalendar({
+                                            day: item,
+                                            month: monthArray[mouthNumber],
+                                            year: thisYear
+                                        })
                                 }}>
                                 {item}
                             </div>
@@ -93,42 +124,33 @@ const Ordering = (props: PropsType) => {
     const year = new Date().getFullYear()
     const month = new Date().getMonth()
 
-    console.log('month')
-    console.log(month + firstMouthPlus)
-
-    const thisMonth = new Date(year, month + firstMouthPlus)
-    const nextThisMonth = new Date(year, month + secondMouthPlus)
-
-    console.log('thisMonth111111111111111111111')
-    console.log(thisMonth)
-
-    const plusOneForMouth = (first: number, second: number) => {
-        setFirstMouthPlus(first)
-        setSecondMouthPlus(second)
-    }
+    const thisTime = new Date(year, month + firstMouthPlus)
+    const nextThisMonth = new Date(year, new Date().getMonth() + secondMouthPlus)
 
     const firstMouthDate: number[] = []
     const secondMouthDate: number[] = []
 
-    const createCalendarData = (thisMonthOrigin: Date, mouthArray: number[]) => {
-        const thisMonth = new Date(thisMonthOrigin.getTime())
+    const createCalendarData = (thisTimeOrigin: Date, mouthArray: number[]) => {
+        const thisTime = new Date(thisTimeOrigin.getTime())
 
         for (let i = 0; i < 31; i++) {
-            if (thisMonth.getFullYear() > year + 1) {
+            if (thisTimeOrigin.getDay() - 1 > i && thisTime.getFullYear() == year && thisTime.getMonth() == month) {
+                indexDisableDays.push(i)
+            }
+            if (thisTime.getFullYear() > year + 1) {
                 isYearExceeds = true
             }
-            if (month == thisMonthOrigin.getMonth() && year == thisMonth.getFullYear()) {
+            if (month == thisTimeOrigin.getMonth() && year == thisTime.getFullYear()) {
                 shortageYear = true
             }
-
-            if (mouthArray.includes(thisMonth.getDate()) != true) {
-                mouthArray.push(thisMonth.getDate())
-                thisMonth.setDate(thisMonth.getDate() + 1)
+            if (mouthArray.includes(thisTime.getDate()) != true) {
+                mouthArray.push(thisTime.getDate())
+                thisTime.setDate(thisTime.getDate() + 1)
             }
         }
     }
 
-    createCalendarData(thisMonth, firstMouthDate)
+    createCalendarData(thisTime, firstMouthDate)
     createCalendarData(nextThisMonth, secondMouthDate)
 
     const printingAirName = (e: string) => {
@@ -142,16 +164,20 @@ const Ordering = (props: PropsType) => {
         itemForRender: airType,
         selectedAir: string,
         setDropMenu: (boolean: boolean) => void,
-        isDropMenuOpen: boolean
+        isDropMenuOpen: boolean,
+        setInputValue: (str: string) => void
     ) => {
         if (itemForRender.name != selectedAir) {
             return (
                 <div
                     className="ordering-selectDeparture-fromToContainer-itemDrop"
                     onClick={() => {
-                        setFromAirInputValue(itemForRender.name)
+                        setInputValue(itemForRender.name)
                         setDropMenu(!isDropMenuOpen)
                     }}>
+                    <div className="ordering-selectDeparture-fromToContainer-itemDrop-price">
+                        {itemForRender.price != 0 ? `${itemForRender.price} $` : itemForRender.price}
+                    </div>
                     <p className="ordering-selectDeparture-fromToContainer-itemDrop-text">{itemForRender.name}</p>
                 </div>
             )
@@ -163,11 +189,12 @@ const Ordering = (props: PropsType) => {
         selectedAir: string,
         regExpInputValue: RegExp,
         setDropMenu: (boolean: boolean) => void,
-        isDropMenuOpen: boolean
+        isDropMenuOpen: boolean,
+        setInputValue: (str: string) => void
     ) => {
         props.airsArray.forEach((item) => {
             if (item.name.match(regExpInputValue) != null) {
-                let JSX = renderItemDrop(item, selectedAir, setDropMenu, isDropMenuOpen)
+                let JSX = renderItemDrop(item, selectedAir, setDropMenu, isDropMenuOpen, setInputValue)
                 if (JSX != undefined) {
                     itemsDrops.push(JSX)
                 }
@@ -175,17 +202,45 @@ const Ordering = (props: PropsType) => {
         })
     }
 
-    renderItemDrop2(itemsDropsFromAir, toAirInputValue, regExpFromAirInputValue, setFromAirDropMenu, fromAirDropMenu)
-    renderItemDrop2(itemsDropsToAir, fromAirInputValue, regExpToAirInputValue, setToAirDropMenu, toAirDropMenu)
+    renderItemDrop2(
+        itemsDropsFromAir,
+        toAirInputValue,
+        regExpFromAirInputValue,
+        setFromAirDropMenu,
+        fromAirDropMenu,
+        setFromAirInputValue
+    )
+    renderItemDrop2(
+        itemsDropsToAir,
+        fromAirInputValue,
+        regExpToAirInputValue,
+        setToAirDropMenu,
+        toAirDropMenu,
+        setToAirInputValue
+    )
 
     const checkAllInputs = (toAirInputValue: string, fromAirInputValue: string) => {
+        // fromAirInputRef
+        // toAirInputRef
+
         if (
             props.airsArray.find((item) => item.name == toAirInputValue) != undefined &&
-            props.airsArray.find((item) => item.name == fromAirInputValue) != undefined
+            props.airsArray.find((item) => item.name == fromAirInputValue) != undefined &&
+            props.selectedDataCalendar != null
         ) {
-            console.log('COOL')
+            let toAir = props.airsArray.find((item) => item.name == toAirInputValue)
+            let fromAir = props.airsArray.find((item) => item.name == fromAirInputValue)
+
+            if (fromAir != undefined) {
+                props.setSelectedFromAir(fromAir)
+            }
+            if (toAir != undefined) {
+                props.setSelectedToAir(toAir)
+            }
+
+            navigate('/chainOrderPage/selectFlights')
         } else {
-            console.log('BAD')
+            alert('inputs is uncorrect')
         }
     }
 
@@ -204,6 +259,7 @@ const Ordering = (props: PropsType) => {
                                         <input
                                             className="ordering-selectDeparture-fromToContainer-from"
                                             value={fromAirInputValue}
+                                            ref={fromAirInputRef}
                                             onChange={(e) => {
                                                 printingAirName(e.target.value)
                                             }}
@@ -219,9 +275,19 @@ const Ordering = (props: PropsType) => {
                                                 {itemsDropsFromAir.map((item) => item)}
                                             </div>
                                         ) : null}
+                                        <div className="ordering-selectDeparture-fromToContainer-toPrice">
+                                            <div className="ordering-selectDeparture-fromToContainer-toPrice-symbols">
+                                                {props.airsArray.map((item) => {
+                                                    if (item.name == fromAirInputValue) {
+                                                        return `${item.price} $`
+                                                    }
+                                                })}{' '}
+                                            </div>
+                                        </div>
                                         <input
                                             className="ordering-selectDeparture-fromToContainer-to"
                                             value={toAirInputValue}
+                                            ref={toAirInputRef}
                                             onClick={() => {
                                                 setToAirDropMenu(!toAirDropMenu)
                                                 setFromAirDropMenu(false)
@@ -235,6 +301,15 @@ const Ordering = (props: PropsType) => {
                                                 {itemsDropsToAir.map((item) => item)}
                                             </div>
                                         ) : null}
+                                        <div className="ordering-selectDeparture-fromToContainer-toPrice">
+                                            <div className="ordering-selectDeparture-fromToContainer-to-symbol">
+                                                {props.airsArray.map((item) => {
+                                                    if (item.name == toAirInputValue) {
+                                                        return `${item.price} $`
+                                                    }
+                                                })}{' '}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="ordering-person">
@@ -253,7 +328,7 @@ const Ordering = (props: PropsType) => {
                                                         onClick={() => setIsMonthCalendarOpen(false)}>
                                                         X
                                                     </div>
-                                                    {thisMonth.getFullYear()}
+                                                    {thisTime.getFullYear()}
                                                 </div>
                                                 <div className="ordering-selectDate-popUpCalendar-monthsContainer">
                                                     <div className="ordering-selectDate-popUpCalendar-monthsContainer-changMouth">
@@ -276,40 +351,40 @@ const Ordering = (props: PropsType) => {
                                                             change
                                                         </button>
                                                     </div>
-                                                    {renderMonthBox(firstMouthDate, thisMonth.getMonth())}
-                                                    {renderMonthBox(secondMouthDate, nextThisMonth.getMonth())}
+                                                    {renderMonthBox(
+                                                        firstMouthDate,
+                                                        thisTime.getMonth(),
+                                                        thisTime.getFullYear()
+                                                    )}
+                                                    {renderMonthBox(
+                                                        secondMouthDate,
+                                                        nextThisMonth.getMonth(),
+                                                        nextThisMonth.getFullYear()
+                                                    )}
                                                 </div>
                                                 <div className="ordering-selectDate-popUpCalendar-okButContainer">
                                                     <button
                                                         className="ordering-selectDate-popUpCalendar-okBut"
-                                                        disabled={!isDataSelected}>
+                                                        disabled={!isDataSelected}
+                                                        onClick={() => {setIsMonthCalendarOpen(!isMonthCalendarOpen)}}>
                                                         OK
                                                     </button>
                                                 </div>
                                             </div>
                                         ) : null}
                                     </div>
-                                    <Link to="/chainOrderPage/selectFlights">
-                                        <div
-                                            style={{
-                                                position: 'absolute',
-                                                height: '100px',
-                                                width: '100px',
-                                                backgroundColor: 'red'
-                                            }}>
-                                            4
-                                        </div>
-                                    </Link>
                                 </div>
                             </div>
                         </Col>
-                        <Col
-                            sm={{ offset: 0, span: 1 }}
-                            className="ordering-searchButton"
-                            onClick={() => { 
-                                checkAllInputs(toAirInputValue, fromAirInputValue)
-                            }}>
-                            SEARCH
+                        <Col sm={{ offset: 0, span: 1 }}>
+                            <button
+                                className="ordering-searchButton"
+                                onClick={() => {
+                                    checkAllInputs(toAirInputValue, fromAirInputValue)
+                                }}>
+                                {' '}
+                                SEARCH
+                            </button>
                         </Col>
                     </Row>
                 </div>
@@ -321,7 +396,12 @@ const Ordering = (props: PropsType) => {
 const mapStateToProps = (state: RootStateOrAny) => ({
     airsArray: state.generalState.airsArray,
     indexAirTo: state.generalState.indexAirTo,
-    indexAirFrom: state.generalState.indexAirFrom
+    indexAirFrom: state.generalState.indexAirFrom,
+    selectedDataCalendar: state.chainState.selectedDataCalendar
 })
 
-export default connect(mapStateToProps, {})(Ordering)
+export default connect(mapStateToProps, {
+    setDataCalendar: actions.setDataCalendar,
+    setSelectedFromAir: actions.setSelectedFromAir,
+    setSelectedToAir: actions.setSelectedToAir
+})(Ordering)

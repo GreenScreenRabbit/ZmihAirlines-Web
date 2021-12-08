@@ -43,7 +43,16 @@
         }
     }
     &-searchButton {
+        border: 0px;
+        height: 100%;
+        width: 100%;
         background-color: rgb(248, 143, 161);
+        transition: background-color 2s;
+        border: rgb(119, 116, 116) 4px solid;
+        &:hover {
+            transition: background-color 2s;
+            background-color: rgb(214, 61, 87);
+        }
     }
     &-selectDate {
         position: relative;
@@ -204,12 +213,28 @@
                 background-color: whitesmoke;
                 height: 90px;
                 border-bottom: 2px solid silver;
+
                 &-text {
                     position: absolute;
                     transform: translate(-50%, -50%);
                     top: 50%;
                     left: 25%;
                     font-size: 40px;
+                }
+                &-price {
+                    position: absolute;
+                    transform: translate(-50%, -50%);
+                    top: 70%;
+                    left: 75%;
+                    font-size: 24px;
+                    color: rgb(93, 96, 99);
+                    pointer-events: none;
+                    -webkit-touch-callout: none;
+                    -webkit-user-select: none;
+                    -khtml-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
                 }
             }
             &-from {
@@ -231,6 +256,28 @@
                     overflow-y: scroll;
                 }
             }
+            &-toPrice {
+                position: absolute;
+                top: 0%;
+                height: 100%;
+                width: 100%;
+                pointer-events: none;
+                &-symbols {
+                    position: absolute;
+                    transform: translate(-50%, -50%);
+                    left: 40%;
+                    font-size: 30px;
+                    color: rgb(120, 124, 124);
+                    top: 70%;
+                    pointer-events: none;
+                    -webkit-touch-callout: none;
+                    -webkit-user-select: none;
+                    -khtml-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                }
+            }
             &-to {
                 position: relative;
                 display: inline-block;
@@ -238,6 +285,24 @@
                 width: 50%;
                 font-size: 60px;
                 background-color: whitesmoke;
+
+                &-symbol {
+                    position: absolute;
+                    transform: translate(-50%, -50%);
+                    left: 90%;
+                    white-space: nowrap;
+                    font-size: 30px;
+                    color: rgb(120, 124, 124);
+                    top: 70%;
+                    pointer-events: none;
+                    -webkit-touch-callout: none;
+                    -webkit-user-select: none;
+                    -khtml-user-select: none;
+                    -moz-user-select: none;
+                    -ms-user-select: none;
+                    user-select: none;
+                }
+
                 &-dropMenu {
                     z-index: 2;
                     position: absolute;

@@ -10,6 +10,7 @@ type PropsType = {
     indexSelectedSeat: number
     setRandomBusySeats: (arg0: number[]) => void
     setIndexDelectedSeat: (arg0: number) => void
+    setChainPageCorrect: (index: number) => void
 }
 
 const SeatsPage = (props: PropsType) => {
@@ -169,7 +170,12 @@ const SeatsPage = (props: PropsType) => {
                     </Row>
                 </div>
                 <Link to="../payout">
-                    <button className="seatsPage-nextButton" disabled={props.indexSelectedSeat != null ? false : true}>
+                    <button
+                        className="seatsPage-nextButton"
+                        disabled={props.indexSelectedSeat != null ? false : true}
+                        onClick={() => {
+                            props.setChainPageCorrect(2)
+                        }}>
                         NEXT
                     </button>
                 </Link>
@@ -185,5 +191,6 @@ let mapStateToProps = (state: RootStateOrAny) => ({
 
 export default connect(mapStateToProps, {
     setRandomBusySeats: actions.setRandomBusySeats,
-    setIndexDelectedSeat: actions.setIndexDelectedSeat
+    setIndexDelectedSeat: actions.setIndexDelectedSeat,
+    setChainPageCorrect: actions.setChainPageCorrect
 })(SeatsPage)

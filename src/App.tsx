@@ -14,6 +14,7 @@ import ProfilePage from './profilePage/ProfilePage'
 
 type PropsType = {
     setRandomBusySeats: (arg0: number[]) => void
+    // history: History
 }
 
 class App extends React.Component<PropsType> {
@@ -50,7 +51,7 @@ class App extends React.Component<PropsType> {
                 <Header />
                 <Routes>
                     
-                    <Route path="/" element={<StartPage />} />
+                    <Route path="/" element={<StartPage  />} />
                     <Route path="/profile" element={<ProfilePage />} />
                     <Route path="/informationPage" element={<InformationPage />} />
                     <Route path="/chainOrderPage/*" element={<ChainOrderPage />} />

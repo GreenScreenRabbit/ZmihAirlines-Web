@@ -8,11 +8,15 @@ import { actions } from '../../actions and const/actions'
 import { BagageStateType, BagageType } from './SelectFlightsTypes'
 import { selectLanguage } from '../../selectLanguage'
 import { LanguageType } from '../../languageType'
+import { useLocation } from 'react-router'
+import { airType } from '../../airType'
 
 type PropsType = {
     selectedLanguage: LanguageType
-    //TODO TYPE THIS NORMAL
     setSelectedBagage: (arg0: BagageStateType) => void
+    setChainPageCorrect: (arg0: number) => void
+    selectedFromAir:airType
+    selectedToAir:airType
 }
 
 const SelectFlights = (props: PropsType) => {
@@ -30,6 +34,7 @@ const SelectFlights = (props: PropsType) => {
         ultraPremium = 'ultraPremium'
     }
 
+    
     type LanguageObjBagageText = {
         [keyof in LanguageBagageType]: { [keyof in LanguageBagageTextType]: string }
     }
@@ -44,7 +49,7 @@ const SelectFlights = (props: PropsType) => {
         [keyof in LanguageType]: T
     }
 
-    const createObjBagageForState = (name: BagageType, text: string,price:number) => {
+    const createObjBagageForState = (name: BagageType, text: string, price: number) => {
         const objBagage: BagageStateType = {
             name,
             text,
@@ -99,15 +104,13 @@ const SelectFlights = (props: PropsType) => {
             <div className="selectFlights-body">
                 <div className="selectFlights-cartBody">
                     <div className="selectFlights-flightName" onClick={() => setIsSelectBaggageOpen(true)}>
-                        <div className="selectFlights-flightName-textContainer">SAMARA ={'>'} PARACHA</div>
+                        <div className="selectFlights-flightName-textContainer">{props.selectedFromAir.name} ={'>'} {props.selectedToAir.name}</div>
                     </div>
                     <div className="selectFlights-dataContainer"></div>
                     <div className="selectFlights-mainSection">
                         <div className="selectFlights-mainSection-timeSection">timeSection</div>
                         <div
                             className="selectFlights-mainSection-buy"
-                            // delete
-                            //onClick={() => openSelectBaggage(false)}
                         >
                             {isSelectBaggageOpen ? (
                                 isBaggageSelected ? (
@@ -215,7 +218,6 @@ const SelectFlights = (props: PropsType) => {
                                                 BagageType.ULTRAPREMIUM,
                                                 selecteLanguageText.bagageText.ultraPremium,
                                                 150
-                                                
                                             )
 
                                             setIsBaggageSelected(true)
@@ -230,11 +232,15 @@ const SelectFlights = (props: PropsType) => {
 
                     {isBaggageSelected ? (
                         <div className="selectFlights-continueButton-container">
-                            <div className="selectFlights-continueButton-body">
-                                <Link to="../passenger">
-                                    <div className="selectFlights-continueButton-body">CLICK</div>
-                                </Link>
-                            </div>
+                            <Link to="../passenger" style={{ textDecoration: 'none' }}>
+                                <div
+                                    className="selectFlights-continueButton-body"
+                                    onClick={() => {
+                                        props.setChainPageCorrect(0)
+                                    }}>
+                                    CLICK 
+                                </div>
+                            </Link>
                         </div>
                     ) : null}
                 </div>
@@ -244,7 +250,12 @@ const SelectFlights = (props: PropsType) => {
 }
 
 let mapStateToProps = (state: RootStateOrAny) => ({
-    selectedLanguage: state.generalState.selectedLanguage
+    selectedLanguage: state.generalState.selectedLanguage,
+    selectedFromAir: state.chainState.selectedFromAir,
+    selectedToAir: state.chainState.selectedToAir
 })
 
-export default connect(mapStateToProps, { setSelectedBagage: actions.setSelectedBagage })(SelectFlights)
+export default connect(mapStateToProps, {
+    setSelectedBagage: actions.setSelectedBagage,
+    setChainPageCorrect: actions.setChainPageCorrect
+})(SelectFlights)
