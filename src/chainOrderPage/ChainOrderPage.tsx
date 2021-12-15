@@ -14,9 +14,7 @@ type PropsType = {
 }
 
 const ChainOrderPage = (props: PropsType, { match }: any) => {
-    console.log('match')
-    console.log(match)
-    console.log('RNDR')
+    const pagesName: string[] = ['Select Flights', 'Passenger Info', 'CHOOSE SEAT', 'Payout']
 
     const leftBarPageDivChangeColor = (bol: boolean) => {
         let forRetrunStyle: string[] = []
@@ -38,7 +36,9 @@ const ChainOrderPage = (props: PropsType, { match }: any) => {
                                 <div
                                     className="leftBarPageDiv"
                                     onClick={() => props.setChainPageCorrect(index)}
-                                    style={{ backgroundColor: leftBarPageDivChangeColor(bol) }}></div>
+                                    style={{ backgroundColor: leftBarPageDivChangeColor(bol) }}>
+                                    <div className="leftBarPageDiv-text">{pagesName[index]}</div>
+                                </div>
                             )
                         })}
 

@@ -69,8 +69,15 @@
   background-color: #3434e0;
 }
 
+.ordering-selectDate-text {
+  vertical-align: middle;
+  text-align: center;
+  font-size: 36px;
+  line-height: 100px;
+}
+
 .ordering-selectDate-container {
-  position: relative;
+  position: absolute;
   margin-left: 10%;
   width: 80%;
   top: 20%;

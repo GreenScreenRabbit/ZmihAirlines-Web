@@ -24,12 +24,65 @@
         height: 100px;
         background-color: grey;
         font-size: 50px;
+        &-data{
+            position: relative;
+            height: 30%;
+            width: 100%;
+            background-color: rgb(133, 133, 250);
+            text-align: center;
+            line-height: 48px;
+
+            vertical-align: middle;
+        }
+        &-fromToContainer{
+            position: relative;
+            height: 100%;
+            width: 100%;
+            display: inline-block;
+            background-color: rgb(95, 95, 255);
+        }
+        &-from{
+            font-size: 48px;
+            text-align: center;
+            vertical-align: middle;
+            display: inline-block;
+            line-height: 150px;
+            position: relative;
+            height: 100%;
+            width: 50%;
+            background-color: coral;
+        }&-to{
+            @extend .profilePage-ticketText-from
+        }
+        &-field{
+            position: relative;
+            height: 10%;
+            width: 100%;
+            font-size: 18px;
+            margin-left: 5%;
+        }
+        &-container{
+            position: relative;
+            height: 40%;
+            width: 100%;
+            background-color: rgb(143, 143, 143);
+        }
+            
     }
     &-ticket {
         position: relative;
         height: 400px;
         width: 100%;
-        background-color: hotpink;
+        background-color: rgb(243, 113, 178);
+    }
+    &-unTicket{
+        position: relative;
+        height: 400px;
+        width: 100%;
+        background-color: rgb(60, 212, 250);
+        font-size: 48px;
+        text-align: center;
+        line-height: 400px;
     }
     &-exitBut {
         position: absolute;

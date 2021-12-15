@@ -2,14 +2,35 @@ import { useState } from 'react'
 import { connect, RootStateOrAny } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { actions } from '../actions and const/actions'
+import { LanguageTextType, LanguageType } from '../languageType'
+import { selectLanguage } from '../selectLanguage'
 import './header.css'
 
 type PropsType = {
     setSelectedLanguage: (ors0: string) => void
-    selectedLanguage: string
+    selectedLanguage: LanguageType
 }
 
 const Header = (props: PropsType) => {
+    const languageText = {
+        EN: {
+            main: 'Main',
+            profile: 'Profile',
+            information: 'Information'
+        },
+        RU: {
+            main: 'Главная',
+            profile: 'Профиль',
+            information: 'Информация'
+        }
+    }
+
+    const languageTextCopy: LanguageTextType<typeof languageText> = Object.assign(languageText)
+
+    const selecteLanguageText = selectLanguage(languageTextCopy, props.selectedLanguage)
+
+    const { main, profile, information } = selecteLanguageText
+
     const [isOpenDropMenu, setIsOpenDropMenu] = useState(false)
 
     const url = window.location.href
@@ -22,17 +43,18 @@ const Header = (props: PropsType) => {
             <div className="header">
                 <Link to="informationPage">
                     <div className="" style={{ top: '50%', position: 'absolute', left: '70%' }}>
-                        <div className="informationPage">INFORMATION</div>
+                        <div className="informationPage">{information}</div>
+
                     </div>
                 </Link>
                 <Link to="">
                     <div className="" style={{ top: '50%', position: 'absolute', left: '5%' }}>
-                        <div className="mainBut">Main</div>
+                        <div className="mainBut">{main}</div>
                     </div>
                 </Link>
                 <Link to="profile">
                     <div className="" style={{ top: '50%', position: 'absolute', left: '55%' }}>
-                        <div className="profile">Profile</div>
+                        <div className="profile">{profile}</div>
                     </div>
                 </Link>
                 <div className="" style={{ top: '25%', position: 'absolute', left: '75%' }}>
@@ -44,12 +66,18 @@ const Header = (props: PropsType) => {
                             <>
                                 <div
                                     className="header-chooseLanguage-item"
-                                    onClick={() => props.setSelectedLanguage('EN')}>
+                                    onClick={() => {
+                                        props.setSelectedLanguage('EN')
+                                        setIsOpenDropMenu(!isOpenDropMenu)
+                                    }}>
                                     EN
                                 </div>
                                 <div
                                     className="header-chooseLanguage-item"
-                                    onClick={() => props.setSelectedLanguage('RU')}>
+                                    onClick={() => {
+                                        props.setSelectedLanguage('RU')
+                                        setIsOpenDropMenu(!isOpenDropMenu)
+                                    }}>
                                     RU
                                 </div>
                             </>

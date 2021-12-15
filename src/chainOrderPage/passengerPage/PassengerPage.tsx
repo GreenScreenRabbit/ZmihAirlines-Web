@@ -5,12 +5,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Transition, TransitionGroup } from 'react-transition-group'
 import { actions } from '../../actions and const/actions'
 import someIcon from '../../someIcon.jpg'
+import { PersonType } from '../chainOrderType'
 import { BagageStateType } from '../selectFlights/SelectFlightsTypes'
 import './passengerPage.css'
 
 type PropsType = {
     selectedBagage?: BagageStateType
     setChainPageCorrect: (arg0: number) => void
+    setPerson: (person: PersonType) => void
 }
 
 const PassengerPage = (props: PropsType) => {
@@ -57,7 +59,21 @@ const PassengerPage = (props: PropsType) => {
         setSelectedSex(ButtonsSelectSexNames[index])
     }
 
-    const checkAllInputsAndGender = (sex: string, ...inputsRef: RefObject<HTMLInputElement>[]) => {
+    const createPerson = (firstName: string, lastName: string, sex: string): PersonType => {
+        return {
+            firstName,
+            lastName,
+            sex
+        }
+    }
+
+    const personData: PersonType = createPerson(firstName, lastName, selectedSex)
+
+    const checkAllInputsAndGender = (
+        sex: string,
+        personData: PersonType,
+        ...inputsRef: RefObject<HTMLInputElement>[]
+    ) => {
         const allCorrect: boolean[] = []
 
         inputsRef.forEach((input, index) => {
@@ -67,7 +83,6 @@ const PassengerPage = (props: PropsType) => {
                 } else {
                     allCorrect.push(false)
                     input.current.style.backgroundColor = 'orange'
-                    console.log('VUZOW')
 
                     isCorrectInputsFunc[index](true)
                 }
@@ -82,6 +97,7 @@ const PassengerPage = (props: PropsType) => {
         if (allCorrect.includes(false)) {
             alert('document incorrect')
         } else {
+            props.setPerson(personData)
             navigate('../seats')
         }
     }
@@ -96,52 +112,44 @@ const PassengerPage = (props: PropsType) => {
                     <Row style={{ height: '100%' }}>
                         <Col md={{ span: 7 }}>
                             <div className="passengerPage-personalityData-inputsContainer">
-                         
-
-                  
-                                    <Transition
-                                        in={firstNameIsCorrect}
-                                        delay={200}
-                                        onEntering={() =>
-                                            setTimeout(() => setFirstNameIsCorrect(!firstNameIsCorrect), 200)
-                                        }
-                                        addEndListener={(node, done) => {
-                                            node.addEventListener('transitionend', done, false)
-                                        }}>
-                                        {(state) => {
-                                            return (
-                                                <input
-                                                    ref={firstNameRef}
-                                                    className={`passengerPage-personalityData-input ${state}`}
-                                                    placeholder="firstName"
-                                                    value={firstName}
-                                                    onChange={(e) => setFirstName(e.target.value)}
-                                                />
-                                            )
-                                        }}
-                                    </Transition>
-                                    <Transition
-                                        in={lastNameIsCorrect}
-                                        delay={200}
-                                        onEntering={() =>
-                                            setTimeout(() => setLastNameIsCorrect(!lastNameIsCorrect), 200)
-                                        }
-                                        addEndListener={(node, done) => {
-                                            node.addEventListener('transitionend', done, false)
-                                        }}>
-                                        {(state) => {
-                                            return (
-                                                <input
-                                                    ref={lastNameRef}
-                                                    className={`passengerPage-personalityData-input ${state}`}
-                                                    placeholder="lastName"
-                                                    value={lastName}
-                                                    onChange={(e) => setLastName(e.target.value)}
-                                                />
-                                            )
-                                        }}
-                                    </Transition>
-                                
+                                <Transition
+                                    in={firstNameIsCorrect}
+                                    delay={200}
+                                    onEntering={() => setTimeout(() => setFirstNameIsCorrect(!firstNameIsCorrect), 200)}
+                                    addEndListener={(node, done) => {
+                                        node.addEventListener('transitionend', done, false)
+                                    }}>
+                                    {(state) => {
+                                        return (
+                                            <input
+                                                ref={firstNameRef}
+                                                className={`passengerPage-personalityData-input ${state}`}
+                                                placeholder="firstName"
+                                                value={firstName}
+                                                onChange={(e) => setFirstName(e.target.value)}
+                                            />
+                                        )
+                                    }}
+                                </Transition>
+                                <Transition
+                                    in={lastNameIsCorrect}
+                                    delay={200}
+                                    onEntering={() => setTimeout(() => setLastNameIsCorrect(!lastNameIsCorrect), 200)}
+                                    addEndListener={(node, done) => {
+                                        node.addEventListener('transitionend', done, false)
+                                    }}>
+                                    {(state) => {
+                                        return (
+                                            <input
+                                                ref={lastNameRef}
+                                                className={`passengerPage-personalityData-input ${state}`}
+                                                placeholder="lastName"
+                                                value={lastName}
+                                                onChange={(e) => setLastName(e.target.value)}
+                                            />
+                                        )
+                                    }}
+                                </Transition>
                             </div>
                         </Col>
                         <Col md={{ span: 5 }}>
@@ -198,7 +206,7 @@ const PassengerPage = (props: PropsType) => {
                     <div
                         className="passengerPage-nextButton"
                         onClick={() => {
-                            checkAllInputsAndGender(selectedSex, firstNameRef, lastNameRef)
+                            checkAllInputsAndGender(selectedSex,personData,firstNameRef, lastNameRef)
                             props.setChainPageCorrect(1)
                         }}>
                         NEXT
@@ -214,4 +222,7 @@ const mapStateToProps = (state: RootStateOrAny) => ({
     selectedBagage: state.chainState.selectedBagage
 })
 
-export default connect(mapStateToProps, { setChainPageCorrect: actions.setChainPageCorrect })(PassengerPage)
+export default connect(mapStateToProps, {
+    setChainPageCorrect: actions.setChainPageCorrect,
+    setPerson: actions.setPerson
+})(PassengerPage)

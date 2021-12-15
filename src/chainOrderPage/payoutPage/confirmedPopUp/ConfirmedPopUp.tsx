@@ -11,6 +11,7 @@ const ConfirmedPopUp = (props: PropsType) => {
         <>
             <div className="confirmedPopUp-backWallpaper"></div>
             <div className="confirmedPopUp-body">
+                <div className="confirmedPopUp-body-text">thanks for money</div>
                 <Link to="/profile">
                     <button className="confirmedPopUp-inToProfile" onClick={() => props.setRenderPopUp(false)}>
                         PROFILE

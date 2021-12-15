@@ -125,4 +125,15 @@
         background-color: rgb(67, 67, 253);
         height: 100px;
     }
+    &-toProfileButton {
+        @extend .rosterConfirm-payButton;
+        background-color: rgb(252, 121, 121);
+        text-decoration: none;
+        color: black;
+        border: 0;
+        &:hover {
+            text-decoration: none;
+            color: black;
+        }
+    }
 }

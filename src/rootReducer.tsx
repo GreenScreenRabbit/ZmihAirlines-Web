@@ -8,10 +8,13 @@ import {
     SET_DATA_CALENDAR,
     SET_INDEX_SELECTED_SEAT,
     SET_LOGIN,
+    SET_PERSON,
     SET_SELECTED_FROM_AIR,
-    SET_SELECTED_TO_AIR
+    SET_SELECTED_TO_AIR,
+    SET_TICKET
 } from './actions and const/const'
 import { airType } from './airType'
+import { PersonType, TicketType } from './chainOrderPage/chainOrderType'
 import { BagageStateType } from './chainOrderPage/selectFlights/SelectFlightsTypes'
 import { fakeAPI_Air } from './fakeAPI_Air'
 import { SelectedDataCalendar } from './startpage/ordering/orderingTypes'
@@ -28,7 +31,7 @@ const initialState: initialStateType = {
 type initialStateType = {
     selectedLanguage: string
     logined: boolean
-    ticket: object | null
+    ticket:  TicketType | null 
     indexAirFrom: number
     indexAirTo: number
     airsArray: airType[]
@@ -41,9 +44,11 @@ type initialChainStateType = {
     busySeats: number[]
     indexSelectedSeat: number | null
     selectedBagage: BagageStateType | null
-    selectedDataCalendar: SelectedDataCalendar
+    selectedDataCalendar: SelectedDataCalendar | null
     selectedFromAir: null | airType
     selectedToAir: null | airType
+    // ticket: null | TicketType
+    person: null | PersonType
 }
 
 const initialChainState: initialChainStateType = {
@@ -51,9 +56,11 @@ const initialChainState: initialChainStateType = {
     busySeats: [],
     indexSelectedSeat: null,
     selectedBagage: null,
-    selectedDataCalendar: { day: 1, month: 'December', year: 2022 },
+    selectedDataCalendar: null,
     selectedFromAir: null,
-    selectedToAir: null
+    selectedToAir: null,
+    // ticket: null,
+    person: null
 }
 
 const generalStateReducer = (generalState = initialState, action: ActionsTypes) => {
@@ -63,6 +70,13 @@ const generalStateReducer = (generalState = initialState, action: ActionsTypes) 
         }
         case SET_LOGIN: {
             return { ...generalState, logined: action.bol }
+        }
+
+        case SET_TICKET: {
+            return {
+                ...generalState,
+                ticket: action.ticket
+            }
         }
 
         default:
@@ -116,6 +130,10 @@ const chainStateReducer = (chainState = initialChainState, action: ActionsTypes)
                 ...chainState,
                 selectedFromAir: action.payload
             }
+        }
+
+        case SET_PERSON: {
+            return { ...chainState, person: action.person }
         }
 
         case SET_SELECTED_TO_AIR: {

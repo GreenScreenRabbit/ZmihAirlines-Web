@@ -7,6 +7,8 @@ import { BagageStateType } from '../selectFlights/SelectFlightsTypes'
 import { SelectedDataCalendar } from '../../startpage/ordering/orderingTypes'
 import { airType } from '../../airType'
 import { actions } from '../../actions and const/actions'
+import { PersonType, TicketType } from '../chainOrderType'
+import { Link } from 'react-router-dom'
 
 type PropsType = {
     selectedBagage: BagageStateType
@@ -15,6 +17,9 @@ type PropsType = {
     selectedFromAir: airType
     selectedToAir: airType
     setChainPageCorrect: (index: number) => void
+    setTicket: (ticket: TicketType) => void
+    person: PersonType
+    ticket: TicketType
 }
 
 const PayoutPage = (props: PropsType) => {
@@ -23,16 +28,26 @@ const PayoutPage = (props: PropsType) => {
     const createTicket = (
         selectedBagage: BagageStateType,
         selectedDataCalendar: SelectedDataCalendar,
-        indexSelectedSeat: number
+        indexSelectedSeat: number,
+        selectedFromAir: airType,
+        selectedToAir: airType,
+        person: PersonType
     ) => {
-        let ticket = {
-            price: selectedBagage
-        }
-        return
-    }
+        const { firstName, lastName, sex } = person
 
-    const FromToAirPrice = () => {
-        return props.selectedFromAir.price + props.selectedToAir.price
+        const ticket: TicketType = {
+            firstName,
+            lastName,
+            sex,
+            price: selectedBagage.price + selectedFromAir.price + selectedToAir.price,
+            selectedBagage: selectedBagage.name,
+            selectedSeat: indexSelectedSeat,
+            data: selectedDataCalendar,
+            fromAirName: selectedFromAir.name,
+            toAirName: selectedFromAir.name
+        }
+
+        return ticket
     }
 
     return (
@@ -45,14 +60,32 @@ const PayoutPage = (props: PropsType) => {
                         TOTAL PRICE:{' '}
                         {props.selectedFromAir.price + props.selectedToAir.price + props.selectedBagage.price} ${' '}
                     </div>
-                    <button
-                        className="rosterConfirm-payButton"
-                        onClick={() => {
-                            props.setChainPageCorrect(3)
-                            setRenderPopUp(true)
-                        }}>
-                        PAY
-                    </button>
+                    {props.ticket ? (
+                        <Link to="/profile">
+                            <button className="rosterConfirm-toProfileButton">
+                                To Profile
+                            </button>
+                        </Link>
+                    ) : (
+                        <button
+                            className="rosterConfirm-payButton"
+                            onClick={() => {
+                                props.setChainPageCorrect(3)
+                                props.setTicket(
+                                    createTicket(
+                                        props.selectedBagage,
+                                        props.selectedDataCalendar,
+                                        props.indexSelectedSeat,
+                                        props.selectedFromAir,
+                                        props.selectedToAir,
+                                        props.person
+                                    )
+                                )
+                                setRenderPopUp(true)
+                            }}>
+                            PAY
+                        </button>
+                    )}
                 </div>
                 <div className="rosterPayout-body">
                     <div className="rosterPayout-plsCheckContainer">PLEASE CHECK</div>
@@ -82,7 +115,12 @@ const mapStateToProps = (state: RootStateOrAny) => ({
     selectedDataCalendar: state.chainState.selectedDataCalendar,
     indexSelectedSeat: state.chainState.indexSelectedSeat,
     selectedFromAir: state.chainState.selectedFromAir,
-    selectedToAir: state.chainState.selectedToAir
+    selectedToAir: state.chainState.selectedToAir,
+    person: state.chainState.person,
+    ticket: state.generalState.ticket
 })
 
-export default connect(mapStateToProps, { setChainPageCorrect: actions.setChainPageCorrect })(PayoutPage)
+export default connect(mapStateToProps, {
+    setChainPageCorrect: actions.setChainPageCorrect,
+    setTicket: actions.setTicket
+})(PayoutPage)

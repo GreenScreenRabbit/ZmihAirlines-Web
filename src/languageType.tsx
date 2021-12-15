@@ -3,15 +3,28 @@ export enum LanguageType {
     RU = 'RU'
 }
 
+
+
+// export type LanguageTextType = {
+//     [keyof in LanguageType]: LanguageType 
+// }
+
+// export type LanguageTextType<T> = {
+//     [keyof in LanguageType]: LanguageType 
+// }
+
+
+
+// export type LanguageTextType<T> = {
+//     [keyof in LanguageType]: T 
+// }
+
+type ValueOf<T> = T[keyof T]
+
+
+
 export type LanguageTextType<T> = {
-    // [key: string]: { [key: string]: { [key: string]: T } }
-
-    // [LanguageType.RU]: any
-
-    //TODO typing trih
-
-    // [LanguageType.RU]: { [key: string]: { [key: string]: T } }
-    // [LanguageType.EN]: { [key: string]: { [key: string]: T } }
-    [keyof in LanguageType]: LanguageType 
-    // { [key: string]: { [key: string]: T } }
+    [keyof in LanguageType]: T[keyof T] 
 }
+
+

@@ -3,6 +3,8 @@ import { Col, Row } from 'react-bootstrap'
 import { connect, RootStateOrAny } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { actions } from '../../actions and const/actions'
+import { LanguageTextType, LanguageType } from '../../languageType'
+import { selectLanguage, useSelectLanguage } from '../../selectLanguage'
 import './seatsPage.css'
 
 type PropsType = {
@@ -11,9 +13,37 @@ type PropsType = {
     setRandomBusySeats: (arg0: number[]) => void
     setIndexDelectedSeat: (arg0: number) => void
     setChainPageCorrect: (index: number) => void
+    selectedLanguage: LanguageType
 }
 
 const SeatsPage = (props: PropsType) => {
+    type ValueOf<T> = T[keyof T]
+    type languageTextTypeS = typeof languageText
+    type objectLanguageTextType = ValueOf<languageTextTypeS>
+
+    const languageText = {
+        EN: {
+            selectSeatsHeading: 'choose your seat',
+            prevButton: 'Prev',
+            nextButton: 'Next'
+        },
+        RU: {
+            selectSeatsHeading: 'Выберете место',
+            prevButton: 'Назад',
+            nextButton: "Дальше"
+        }
+    }
+
+    const languageTextCopy: LanguageTextType<languageTextTypeS> = Object.assign(languageText)
+    // const selectedLanguage = selectLanguage(languageTextCopy, props.selectedLanguage)
+ 
+    const [selectedLanguage, setSelectedLanguage] = useSelectLanguage(languageText, props.selectedLanguage)
+
+    const { selectSeatsHeading, prevButton, nextButton } = selectedLanguage
+
+    console.log('selectedLanguage')
+    console.log(selectedLanguage)
+
     const [indexClicedBox, setIndexClicedBox] = useState<number>(0)
     const [openPopUpBox, setOpenPopUpBox] = useState<boolean>(false)
     const [isBoxCorrect, setIsBoxCorrect] = useState<boolean>(false)
@@ -148,8 +178,10 @@ const SeatsPage = (props: PropsType) => {
         <>
             <div className="seatsPage-body">
                 <div className="seatsPage-heading">
-                    <button className="seatsPage-heading-backButton">BACK</button>
-                    <div className="seatsPage-heading-text">CHOOSE YOUR SEAT</div>
+                    <Link to="../passenger">
+                        <button className="seatsPage-heading-backButton">{prevButton}</button>
+                    </Link>
+                    <div className="seatsPage-heading-text">{selectSeatsHeading}</div>
                 </div>
                 <div className="seatsPage-mainContainer">
                     <Row style={{ height: '100%', width: '100%' }}>
@@ -176,7 +208,7 @@ const SeatsPage = (props: PropsType) => {
                         onClick={() => {
                             props.setChainPageCorrect(2)
                         }}>
-                        NEXT
+                        {nextButton}
                     </button>
                 </Link>
             </div>
@@ -186,7 +218,8 @@ const SeatsPage = (props: PropsType) => {
 
 let mapStateToProps = (state: RootStateOrAny) => ({
     busySeats: state.chainState.busySeats,
-    indexSelectedSeat: state.chainState.indexSelectedSeat
+    indexSelectedSeat: state.chainState.indexSelectedSeat,
+    selectedLanguage: state.generalState.selectedLanguage
 })
 
 export default connect(mapStateToProps, {

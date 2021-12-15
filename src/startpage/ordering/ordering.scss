@@ -61,9 +61,15 @@
 
         width: 50%;
         background-color: rgb(52, 52, 224);
+        &-text {
+            vertical-align: middle;
+            text-align: center;
+            font-size: 36px;
+            line-height: 100px;
+        }
         &-container {
-            position: relative;
-            // left: 10%;
+            position: absolute;
+            // position: relative;
             margin-left: 10%;
             width: 80%;
             top: 20%;

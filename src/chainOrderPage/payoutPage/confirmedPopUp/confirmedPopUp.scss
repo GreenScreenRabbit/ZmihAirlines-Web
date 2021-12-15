@@ -17,6 +17,15 @@
         width: 60%;
         left: 20%;
         background-color: slategray;
+    &-text{
+        position: relative;
+        height: 70%;
+        background-color: rgb(252, 121, 121);
+        line-height: 400px;
+        vertical-align: middle;
+        text-align: center;
+        font-size: 72px;
+    }
     }
     &-inToProfile {
         position: absolute;

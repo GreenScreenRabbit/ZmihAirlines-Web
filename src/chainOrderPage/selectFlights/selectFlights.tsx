@@ -6,10 +6,13 @@ import someIcon from '../../someIcon.jpg'
 import { Link } from 'react-router-dom'
 import { actions } from '../../actions and const/actions'
 import { BagageStateType, BagageType } from './SelectFlightsTypes'
-import { selectLanguage } from '../../selectLanguage'
+import { selectLanguage, useSelectLanguage } from '../../selectLanguage'
 import { LanguageType } from '../../languageType'
 import { useLocation } from 'react-router'
 import { airType } from '../../airType'
+//TODO EXPORT
+import {LanguageTextType} from '../../languageType'
+
 
 type PropsType = {
     selectedLanguage: LanguageType
@@ -45,9 +48,18 @@ const SelectFlights = (props: PropsType) => {
 
     type LanguageObjectsText = LanguageObjBagageText & LanguageObjTextJustText
 
-    type LanguageTextType<T> = {
-        [keyof in LanguageType]: T
-    }
+    // type LanguageTextType<T> = {
+    //     [keyof in LanguageType]: T
+    // }
+
+    
+
+
+    
+    // type LanguageTextType<T> = {
+    //     [keyof in LanguageType]: T
+    // }
+
 
     const createObjBagageForState = (name: BagageType, text: string, price: number) => {
         const objBagage: BagageStateType = {
@@ -55,12 +67,15 @@ const SelectFlights = (props: PropsType) => {
             text,
             price
         }
-        console.log(objBagage)
         props.setSelectedBagage(objBagage)
         return objBagage
     }
 
-    let languageText: LanguageTextType<LanguageObjectsText> = {
+
+
+
+    
+    let languageText = {
         EN: {
             bagageText: {
                 basic: 'Its bagage is default',
@@ -81,8 +96,57 @@ const SelectFlights = (props: PropsType) => {
         }
     }
 
-    let selecteLanguageText = selectLanguage(languageText, props.selectedLanguage)
 
+
+
+
+    const languageTextCopy:LanguageTextType<typeof languageText> = Object.assign(languageText) 
+
+
+
+
+
+
+
+
+
+
+
+
+    // let languageText: LanguageTextType<LanguageObjectsText> = {
+    //     EN: {
+    //         bagageText: {
+    //             basic: 'Its bagage is default',
+    //             premium: 'Its bagage is premium',
+    //             ultraPremium: 'Its bagage is ultra premium'
+    //         },
+    //         selectBundleButText: 'select your bundle',
+    //         buyButton: 'SELECT'
+    //     },
+    //     RU: {
+    //         bagageText: {
+    //             basic: 'Просто багаж',
+    //             premium: 'Это премиум багаж',
+    //             ultraPremium: 'А вот это уже ультра премиум'
+    //         },
+    //         selectBundleButText: 'выберите тип багажа',
+    //         buyButton: 'ВЫБРАТЬ'
+    //     }
+    // }
+
+    // let selecteLanguageText = selectLanguage(languageText, props.selectedLanguage)
+    
+    
+    
+    
+    
+    // let selecteLanguageText = selectLanguage(languageTextCopy, props.selectedLanguage)
+    const [selecteLanguageText,setSelecteLanguageText] = useSelectLanguage(languageText, props.selectedLanguage)
+
+    const {bagageText} = selecteLanguageText
+
+
+    console.log("selecteLanguageText")
     console.log(selecteLanguageText)
 
     const [isSelectBaggageOpen, setIsSelectBaggageOpen] = useState<boolean>(false)
@@ -108,7 +172,7 @@ const SelectFlights = (props: PropsType) => {
                     </div>
                     <div className="selectFlights-dataContainer"></div>
                     <div className="selectFlights-mainSection">
-                        <div className="selectFlights-mainSection-timeSection">timeSection</div>
+                        <div className="selectFlights-mainSection-timeSection"></div>
                         <div
                             className="selectFlights-mainSection-buy"
                         >
@@ -141,7 +205,6 @@ const SelectFlights = (props: PropsType) => {
                     </div>
                     <div className={styleSelectBaggage()}>
                         <Row>
-                            {/* display: isSelectBaggageOpen ? "block" : "none" */}
                             <Col style={{ zIndex: 3 }}>
                                 <div
                                     className="selectFlights-selectBaggage-cartBody"
@@ -162,7 +225,6 @@ const SelectFlights = (props: PropsType) => {
                                                 selecteLanguageText.bagageText.basic,
                                                 50
                                             )
-                                            // selecteLanguageText.bagageText.basic
                                             setIsBaggageSelected(true)
                                             setIsSelectBaggageOpen(false)
                                         }}>
@@ -259,3 +321,5 @@ export default connect(mapStateToProps, {
     setSelectedBagage: actions.setSelectedBagage,
     setChainPageCorrect: actions.setChainPageCorrect
 })(SelectFlights)
+
+

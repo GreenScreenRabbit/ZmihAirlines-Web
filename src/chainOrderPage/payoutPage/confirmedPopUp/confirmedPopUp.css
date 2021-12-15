@@ -19,6 +19,16 @@
   background-color: slategray;
 }
 
+.confirmedPopUp-body-text {
+  position: relative;
+  height: 70%;
+  background-color: #fc7979;
+  line-height: 400px;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 72px;
+}
+
 .confirmedPopUp-inToProfile {
   position: absolute;
   height: 100px;

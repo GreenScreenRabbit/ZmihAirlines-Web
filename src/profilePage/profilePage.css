@@ -28,11 +28,66 @@
   font-size: 50px;
 }
 
+.profilePage-ticketText-data {
+  position: relative;
+  height: 30%;
+  width: 100%;
+  background-color: #8585fa;
+  text-align: center;
+  line-height: 48px;
+  vertical-align: middle;
+}
+
+.profilePage-ticketText-fromToContainer {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+  background-color: #5f5fff;
+}
+
+.profilePage-ticketText-from, .profilePage-ticketText-to {
+  font-size: 48px;
+  text-align: center;
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 150px;
+  position: relative;
+  height: 100%;
+  width: 50%;
+  background-color: coral;
+}
+
+.profilePage-ticketText-field {
+  position: relative;
+  height: 10%;
+  width: 100%;
+  font-size: 18px;
+  margin-left: 5%;
+}
+
+.profilePage-ticketText-container {
+  position: relative;
+  height: 40%;
+  width: 100%;
+  background-color: #8f8f8f;
+}
+
 .profilePage-ticket {
   position: relative;
   height: 400px;
   width: 100%;
-  background-color: hotpink;
+  background-color: #f371b2;
+}
+
+.profilePage-unTicket {
+  position: relative;
+  height: 400px;
+  width: 100%;
+  background-color: #3cd4fa;
+  font-size: 48px;
+  text-align: center;
+  line-height: 400px;
 }
 
 .profilePage-exitBut {

@@ -40,8 +40,6 @@ const Ordering = (props: PropsType) => {
     const [isMonthCalendarOpen, setIsMonthCalendarOpen] = useState<boolean>(false)
     const [firstMouthPlus, setFirstMouthPlus] = useState<number>(0)
     const [secondMouthPlus, setSecondMouthPlus] = useState<number>(1)
-    const [selectedDayCalendar, setselectedDayCalendar] = useState<number>()
-    const [selectedMouthCalendar, setselectedMouthCalendar] = useState<number>()
 
     const [isDataSelected, setIsDataSelected] = useState<boolean>(false)
 
@@ -56,8 +54,6 @@ const Ordering = (props: PropsType) => {
     const [fromAirDropMenu, setFromAirDropMenu] = useState<boolean>(false)
     const [toAirDropMenu, setToAirDropMenu] = useState<boolean>(false)
 
-    const [isAllInputsCorrect, setIsAllInputsCorrect] = useState<boolean>(false)
-
     let regExpFromAirInputValue = new RegExp(`${fromAirInputValue}`, `i`)
     let regExpToAirInputValue = new RegExp(`${toAirInputValue}`, `i`)
 
@@ -65,8 +61,6 @@ const Ordering = (props: PropsType) => {
     let shortageYear = false
 
     const selectMouthAndChangeColor = (mouth: number, mouthCalendar: number) => {
-        setselectedDayCalendar(mouth)
-        setselectedMouthCalendar(mouthCalendar)
         setIsDataSelected(true)
     }
 
@@ -80,19 +74,35 @@ const Ordering = (props: PropsType) => {
                     {mouthArray.map((item, index) => {
                         let isSelected: boolean = false
 
-                        if (
-                            item == props.selectedDataCalendar.day &&
-                            monthArray[mouthNumber] == props.selectedDataCalendar.month &&
-                            thisYear == props.selectedDataCalendar.year
-                        ) {
-                            isSelected = true
+                        if (props.selectedDataCalendar) {
+                            if (
+                                item === props.selectedDataCalendar.day &&
+                                monthArray[mouthNumber] === props.selectedDataCalendar.month &&
+                                thisYear === props.selectedDataCalendar.year
+                            ) {
+                                isSelected = true
+                            }
                         }
+
+                        // if (
+                        //     item === props.selectedDataCalendar.day &&
+                        //     monthArray[mouthNumber] === props.selectedDataCalendar.month &&
+                        //     thisYear === props.selectedDataCalendar.year
+                        // ) {
+                        //     isSelected = true
+                        // }
 
                         let isDisabledDay: boolean = false
 
-                        if (indexDisableDays[index] != undefined && thisTime.getMonth() == month) {
+                        if (
+                            indexDisableDays.includes(item - 1) != true &&
+                            thisTime.getMonth() == month &&
+                            thisTime.getFullYear() == year
+                        ) {
                             if (thisTime.getMonth() == mouthNumber) {
-                                if (thisTime.getFullYear() == thisYear) isDisabledDay = true
+                                if (thisTime.getFullYear() == thisYear) {
+                                    isDisabledDay = true
+                                }
                             }
                         }
 
@@ -125,6 +135,7 @@ const Ordering = (props: PropsType) => {
     const month = new Date().getMonth()
 
     const thisTime = new Date(year, month + firstMouthPlus)
+
     const nextThisMonth = new Date(year, new Date().getMonth() + secondMouthPlus)
 
     const firstMouthDate: number[] = []
@@ -134,7 +145,7 @@ const Ordering = (props: PropsType) => {
         const thisTime = new Date(thisTimeOrigin.getTime())
 
         for (let i = 0; i < 31; i++) {
-            if (thisTimeOrigin.getDay() - 1 > i && thisTime.getFullYear() == year && thisTime.getMonth() == month) {
+            if (new Date().getDate() <= i && thisTime.getFullYear() == year && thisTime.getMonth() == month) {
                 indexDisableDays.push(i)
             }
             if (thisTime.getFullYear() > year + 1) {
@@ -220,9 +231,6 @@ const Ordering = (props: PropsType) => {
     )
 
     const checkAllInputs = (toAirInputValue: string, fromAirInputValue: string) => {
-        // fromAirInputRef
-        // toAirInputRef
-
         if (
             props.airsArray.find((item) => item.name == toAirInputValue) != undefined &&
             props.airsArray.find((item) => item.name == fromAirInputValue) != undefined &&
@@ -319,7 +327,16 @@ const Ordering = (props: PropsType) => {
                                     <div className="ordering-selectDate-container">
                                         <div
                                             className="ordering-selectDate-selectDateButton"
-                                            onClick={() => setIsMonthCalendarOpen(!isMonthCalendarOpen)}></div>
+                                            onClick={() => setIsMonthCalendarOpen(!isMonthCalendarOpen)}
+                                            style={{
+                                                backgroundColor: props.selectedDataCalendar ? '#e8e8ff' : '#b3b3ff'
+                                            }}>
+                                            <div className="ordering-selectDate-text">
+                                                {props.selectedDataCalendar
+                                                    ? `${props.selectedDataCalendar.day}/${props.selectedDataCalendar.month}/${props.selectedDataCalendar.year}`
+                                                    : 'Calendar'}
+                                            </div>
+                                        </div>
                                         {isMonthCalendarOpen ? (
                                             <div className="ordering-selectDate-popUpCalendar">
                                                 <div className="ordering-selectDate-popUpCalendar-year">
@@ -366,7 +383,9 @@ const Ordering = (props: PropsType) => {
                                                     <button
                                                         className="ordering-selectDate-popUpCalendar-okBut"
                                                         disabled={!isDataSelected}
-                                                        onClick={() => {setIsMonthCalendarOpen(!isMonthCalendarOpen)}}>
+                                                        onClick={() => {
+                                                            setIsMonthCalendarOpen(!isMonthCalendarOpen)
+                                                        }}>
                                                         OK
                                                     </button>
                                                 </div>
