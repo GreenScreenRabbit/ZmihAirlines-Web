@@ -3,15 +3,17 @@ import './payoutPage.css'
 import someIcon from '../../someIcon.jpg'
 import ConfirmedPopUp from './confirmedPopUp/ConfirmedPopUp'
 import { useState } from 'react'
-import { BagageStateType } from '../selectFlights/SelectFlightsTypes'
+import { BagageType } from '../selectFlights/SelectFlightsTypes'
 import { SelectedDataCalendar } from '../../startpage/ordering/orderingTypes'
 import { airType } from '../../airType'
 import { actions } from '../../actions and const/actions'
 import { PersonType, TicketType } from '../chainOrderType'
 import { Link } from 'react-router-dom'
+import { LanguageType } from '../../languageType'
+import { useSelectLanguage } from '../../selectLanguage'
 
 type PropsType = {
-    selectedBagage: BagageStateType
+    indexSelectedBagage: number
     selectedDataCalendar: SelectedDataCalendar
     indexSelectedSeat: number
     selectedFromAir: airType
@@ -20,13 +22,42 @@ type PropsType = {
     setTicket: (ticket: TicketType) => void
     person: PersonType
     ticket: TicketType
+    bagageArray: BagageType[]
+    selectedLanguage: LanguageType
 }
 
 const PayoutPage = (props: PropsType) => {
     const [renderPopUp, setRenderPopUp] = useState<boolean>(false)
 
+    const languageText = {
+        RU: {
+            totalPrice: 'Общая сумма',
+            payout: 'Оплата',
+            toProfile: 'К профелю',
+            tyForMoney: 'Спасибо за деньги',
+            profile: 'Профиль',
+            pleaseCheck: 'Пожалуйста, проверьте',
+            bagage: 'багаж',
+            payBut: 'Оплатить'
+        },
+        EN: {
+            totalPrice: 'Total price',
+            payout: 'payout',
+            toProfile: 'To profile',
+            tyForMoney: 'Thanks for money',
+            profile: 'Profile',
+            pleaseCheck: 'please check',
+            bagage: 'bagage',
+            payBut: 'Pay'
+        }
+    }
+
+    const selectedLanguage = useSelectLanguage(languageText, props.selectedLanguage)
+
+    const { payout, tyForMoney, totalPrice, toProfile, profile, pleaseCheck, bagage, payBut } = selectedLanguage
+
     const createTicket = (
-        selectedBagage: BagageStateType,
+        indexSelectedBagage: number,
         selectedDataCalendar: SelectedDataCalendar,
         indexSelectedSeat: number,
         selectedFromAir: airType,
@@ -39,8 +70,8 @@ const PayoutPage = (props: PropsType) => {
             firstName,
             lastName,
             sex,
-            price: selectedBagage.price + selectedFromAir.price + selectedToAir.price,
-            selectedBagage: selectedBagage.name,
+            price: props.bagageArray[props.indexSelectedBagage].price + selectedFromAir.price + selectedToAir.price,
+            selectedBagage: props.bagageArray[props.indexSelectedBagage].name,
             selectedSeat: indexSelectedSeat,
             data: selectedDataCalendar,
             fromAirName: selectedFromAir.name,
@@ -53,18 +84,21 @@ const PayoutPage = (props: PropsType) => {
     return (
         <>
             <div className="payoutPage-body">
-                {renderPopUp ? <ConfirmedPopUp setRenderPopUp={setRenderPopUp} /> : null}
+                {renderPopUp ? (
+                    <ConfirmedPopUp profile={profile} tyForMoney={tyForMoney} setRenderPopUp={setRenderPopUp} />
+                ) : null}
                 <div className="rosterConfirm">
-                    <div className="rosterConfirm-heading">PAYOUT</div>
+                    <div className="rosterConfirm-heading">{payout}</div>
                     <div className="rosterConfirm-totalPrice">
-                        TOTAL PRICE:{' '}
-                        {props.selectedFromAir.price + props.selectedToAir.price + props.selectedBagage.price} ${' '}
+                        {totalPrice}:
+                        {props.selectedFromAir.price +
+                            props.selectedToAir.price +
+                            props.bagageArray[props.indexSelectedBagage].price}{' '}
+                        ${' '}
                     </div>
                     {props.ticket ? (
                         <Link to="/profile">
-                            <button className="rosterConfirm-toProfileButton">
-                                To Profile
-                            </button>
+                            <button className="rosterConfirm-toProfileButton">{toProfile}</button>
                         </Link>
                     ) : (
                         <button
@@ -73,7 +107,7 @@ const PayoutPage = (props: PropsType) => {
                                 props.setChainPageCorrect(3)
                                 props.setTicket(
                                     createTicket(
-                                        props.selectedBagage,
+                                        props.indexSelectedBagage,
                                         props.selectedDataCalendar,
                                         props.indexSelectedSeat,
                                         props.selectedFromAir,
@@ -83,12 +117,12 @@ const PayoutPage = (props: PropsType) => {
                                 )
                                 setRenderPopUp(true)
                             }}>
-                            PAY
+                            {payBut}
                         </button>
                     )}
                 </div>
                 <div className="rosterPayout-body">
-                    <div className="rosterPayout-plsCheckContainer">PLEASE CHECK</div>
+                    <div className="rosterPayout-plsCheckContainer">{pleaseCheck}</div>
                     <div className="rosterPayout-priceForAirplaneContainer">
                         <div className="rosterPayout-priceForAirplaneContainer-fromTo">
                             {props.selectedFromAir.name} - {props.selectedToAir.name}
@@ -98,8 +132,10 @@ const PayoutPage = (props: PropsType) => {
                         </div>
                     </div>
                     <div className="rosterPayout-bagageContainer">
-                        <div className="rosterPayout-bagageContainer-heading">BAGAGE </div>
-                        <div className="rosterPayout-bagageContainer-price">Price: {props.selectedBagage.price} $</div>
+                        <div className="rosterPayout-bagageContainer-heading">{bagage} : </div>
+                        <div className="rosterPayout-bagageContainer-price">
+                            Price: {props.bagageArray[props.indexSelectedBagage].price} $
+                        </div>
                         <div className="rosterPayout-bagageContainer-imgContainer">
                             <img className="rosterPayout-bagageContainer-imgContainer-img" src={someIcon} />
                         </div>
@@ -111,13 +147,15 @@ const PayoutPage = (props: PropsType) => {
 }
 
 const mapStateToProps = (state: RootStateOrAny) => ({
-    selectedBagage: state.chainState.selectedBagage,
+    indexSelectedBagage: state.chainState.selectedBagage,
     selectedDataCalendar: state.chainState.selectedDataCalendar,
     indexSelectedSeat: state.chainState.indexSelectedSeat,
     selectedFromAir: state.chainState.selectedFromAir,
     selectedToAir: state.chainState.selectedToAir,
     person: state.chainState.person,
-    ticket: state.generalState.ticket
+    ticket: state.generalState.ticket,
+    bagageArray: state.chainState.bagageArray,
+    selectedLanguage: state.generalState.selectedLanguage
 })
 
 export default connect(mapStateToProps, {

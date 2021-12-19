@@ -4,15 +4,19 @@ import { connect, RootStateOrAny } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { Transition, TransitionGroup } from 'react-transition-group'
 import { actions } from '../../actions and const/actions'
+import { LanguageType } from '../../languageType'
+import { useSelectLanguage } from '../../selectLanguage'
 import someIcon from '../../someIcon.jpg'
 import { PersonType } from '../chainOrderType'
-import { BagageStateType } from '../selectFlights/SelectFlightsTypes'
+import { BagageStateType, BagageType } from '../selectFlights/SelectFlightsTypes'
 import './passengerPage.css'
 
 type PropsType = {
-    selectedBagage?: BagageStateType
+    indexSelectedBagage: number
     setChainPageCorrect: (arg0: number) => void
     setPerson: (person: PersonType) => void
+    selectedLanguage: LanguageType
+    bagageArray: BagageType[]
 }
 
 const PassengerPage = (props: PropsType) => {
@@ -22,20 +26,42 @@ const PassengerPage = (props: PropsType) => {
 
     const navigate = useNavigate()
 
-    const [firstName, setFirstName] = useState<string>('')
-    const [lastName, setLastName] = useState<string>('')
+    const [firstNameValue, setFirstName] = useState<string>('')
+    const [lastNameValue, setLastName] = useState<string>('')
     const [selectedSex, setSelectedSex] = useState<string>('')
 
     const [firstNameIsCorrect, setFirstNameIsCorrect] = useState<boolean>(false)
     const [lastNameIsCorrect, setLastNameIsCorrect] = useState<boolean>(false)
     const [genderConIsCorrect, setGenderConIsCorrect] = useState<boolean>(false)
 
-    const isCorrectInputsBol: boolean[] = [firstNameIsCorrect, lastNameIsCorrect]
 
     const isCorrectInputsFunc: React.Dispatch<React.SetStateAction<boolean>>[] = [
         setFirstNameIsCorrect,
         setLastNameIsCorrect
     ]
+
+    const languageText = {
+        RU: {
+            firstName: 'имя',
+            lastName: 'фамилия',
+            buttonsSelectSexNames: ['МУЖЧИНА', 'ЖЕНЩИНА', 'ТРАНСФОРМЕР'],
+            urBagage: 'Ваш багаж',
+            nextBut: 'Дальше',
+            prevBut: 'Назад'
+        },
+        EN: {
+            firstName: 'first name',
+            lastName: 'last name',
+            buttonsSelectSexNames: ['MALE', 'FEMALE', 'TRANSFORMER'],
+            urBagage: 'Your bagage',
+            nextBut: 'Next',
+            prevBut: 'Prev'
+        }
+    }
+
+    const selectedLanguage = useSelectLanguage(languageText, props.selectedLanguage)
+
+    const { buttonsSelectSexNames, firstName, lastName, nextBut, prevBut, urBagage } = selectedLanguage
 
     const firstNameRegExp = new RegExp('\\w{3}')
     const lastNameRegExp = new RegExp('\\w{4}')
@@ -52,7 +78,6 @@ const PassengerPage = (props: PropsType) => {
         }
     }
 
-    let buttonsSelectSexNames = ['MALE', 'FEMALE', 'TRANSFORMER']
 
     const hundleClickSButton = (index: number, ButtonsSelectSexNames: string[]) => {
         setIndexSelectedButtonS(index)
@@ -67,7 +92,7 @@ const PassengerPage = (props: PropsType) => {
         }
     }
 
-    const personData: PersonType = createPerson(firstName, lastName, selectedSex)
+    const personData: PersonType = createPerson(firstNameValue, lastNameValue, selectedSex)
 
     const checkAllInputsAndGender = (
         sex: string,
@@ -106,7 +131,7 @@ const PassengerPage = (props: PropsType) => {
         <>
             <div className="passengerPage-body">
                 <Link to="../selectFlights" style={{ textDecoration: 'none' }}>
-                    <div className="passengerPage-backButton">BACK</div>
+                    <div className="passengerPage-backButton">{prevBut}</div>
                 </Link>
                 <div className="passengerPage-personalityData-container">
                     <Row style={{ height: '100%' }}>
@@ -124,8 +149,8 @@ const PassengerPage = (props: PropsType) => {
                                             <input
                                                 ref={firstNameRef}
                                                 className={`passengerPage-personalityData-input ${state}`}
-                                                placeholder="firstName"
-                                                value={firstName}
+                                                placeholder={firstName}
+                                                value={firstNameValue}
                                                 onChange={(e) => setFirstName(e.target.value)}
                                             />
                                         )
@@ -143,8 +168,8 @@ const PassengerPage = (props: PropsType) => {
                                             <input
                                                 ref={lastNameRef}
                                                 className={`passengerPage-personalityData-input ${state}`}
-                                                placeholder="lastName"
-                                                value={lastName}
+                                                placeholder={lastName}
+                                                value={lastNameValue}
                                                 onChange={(e) => setLastName(e.target.value)}
                                             />
                                         )
@@ -184,7 +209,7 @@ const PassengerPage = (props: PropsType) => {
                         </Col>
                     </Row>
 
-                    <div className="Yourbaggage-heading">Your baggage</div>
+                    <div className="Yourbaggage-heading">{urBagage}</div>
                     <Row>
                         <Col md={{ span: 5 }}>
                             <div className="Yourbaggage-container">
@@ -194,24 +219,22 @@ const PassengerPage = (props: PropsType) => {
                         <Col md={{ span: 7 }}>
                             <div className="Yourbaggage-infornationContainer">
                                 <div className="Yourbaggage-infornationContainer-text">
-                                    {props.selectedBagage?.text}
+                                    {props.bagageArray[props.indexSelectedBagage].info}
                                 </div>
                                 <div className="Yourbaggage-infornationContainer-price">
-                                    Price : {props.selectedBagage?.price} $
+                                    Price : {props.bagageArray[props.indexSelectedBagage].price} $
                                 </div>
                             </div>
                         </Col>
                     </Row>
-                    {/* <Link to="../seats"> */}
                     <div
                         className="passengerPage-nextButton"
                         onClick={() => {
-                            checkAllInputsAndGender(selectedSex,personData,firstNameRef, lastNameRef)
+                            checkAllInputsAndGender(selectedSex, personData, firstNameRef, lastNameRef)
                             props.setChainPageCorrect(1)
                         }}>
-                        NEXT
+                        {nextBut}
                     </div>
-                    {/* </Link> */}
                 </div>
             </div>
         </>
@@ -219,7 +242,9 @@ const PassengerPage = (props: PropsType) => {
 }
 
 const mapStateToProps = (state: RootStateOrAny) => ({
-    selectedBagage: state.chainState.selectedBagage
+    indexSelectedBagage: state.chainState.selectedBagage,
+    selectedLanguage: state.generalState.selectedLanguage,
+    bagageArray: state.chainState.bagageArray
 })
 
 export default connect(mapStateToProps, {

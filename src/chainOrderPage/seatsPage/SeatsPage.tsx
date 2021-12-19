@@ -19,30 +19,37 @@ type PropsType = {
 const SeatsPage = (props: PropsType) => {
     type ValueOf<T> = T[keyof T]
     type languageTextTypeS = typeof languageText
-    type objectLanguageTextType = ValueOf<languageTextTypeS>
 
     const languageText = {
         EN: {
             selectSeatsHeading: 'choose your seat',
             prevButton: 'Prev',
-            nextButton: 'Next'
+            nextButton: 'Next',
+            select: "select",
+            seatInfo:{
+                selectThisSeat: "Select this seat ?",
+                busySeat: "seat is busy",
+            },
         },
         RU: {
             selectSeatsHeading: 'Выберете место',
             prevButton: 'Назад',
-            nextButton: "Дальше"
+            nextButton: "Дальше",
+            select: "выбрать",
+            seatInfo:{
+                selectThisSeat: "Выбрать это место ?",
+                busySeat: "Это место занято",
+            }
         }
     }
 
-    const languageTextCopy: LanguageTextType<languageTextTypeS> = Object.assign(languageText)
-    // const selectedLanguage = selectLanguage(languageTextCopy, props.selectedLanguage)
  
-    const [selectedLanguage, setSelectedLanguage] = useSelectLanguage(languageText, props.selectedLanguage)
+    const selectedLanguage = useSelectLanguage(languageText, props.selectedLanguage)
 
-    const { selectSeatsHeading, prevButton, nextButton } = selectedLanguage
+    const { selectSeatsHeading, prevButton, nextButton,seatInfo,select } = selectedLanguage
+    const {busySeat,selectThisSeat} = seatInfo
 
-    console.log('selectedLanguage')
-    console.log(selectedLanguage)
+
 
     const [indexClicedBox, setIndexClicedBox] = useState<number>(0)
     const [openPopUpBox, setOpenPopUpBox] = useState<boolean>(false)
@@ -120,21 +127,21 @@ const SeatsPage = (props: PropsType) => {
                                 </div>
                                 {isBoxCorrect ? (
                                     <div className="seatsPage-popUp-bodyPos">
-                                        <div className="seatsPage-popUp-addSeatText">SELECT THIS SEAT ?</div>
+                                        <div className="seatsPage-popUp-addSeatText">{selectThisSeat}</div>
                                         <div
                                             className="seatsPage-popUp-addButton"
                                             onClick={() => {
                                                 props.setIndexDelectedSeat(item)
                                                 setOpenPopUpBox(false)
                                             }}>
-                                            SELECT
+                                            {select}
                                         </div>
                                         {props.setIndexDelectedSeat}
                                     </div>
                                 ) : (
                                     <>
                                         <div className="seatsPage-popUp-bodyNegative"></div>
-                                        <div className="seatsPage-popUp-busySeatNegative">busy is seat</div>
+                                        <div className="seatsPage-popUp-busySeatNegative">{busySeat}</div>
                                     </>
                                 )}
                             </div>

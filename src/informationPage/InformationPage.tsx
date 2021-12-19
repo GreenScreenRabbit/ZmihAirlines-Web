@@ -1,21 +1,48 @@
-import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import './informationPage.css'
+import { connect, RootStateOrAny } from "react-redux"
+import { Link } from "react-router-dom"
+import { LanguageType } from "../languageType"
+import { useSelectLanguage } from "../selectLanguage"
+import "./informationPage.css"
 
-const InformationPage = () => {
+type PropsType = {
+    prevUrlSupportPage: string
+    selectedLanguage: LanguageType
+}
+
+const InformationPage = (props: PropsType) => {
+    const languageText = {
+        RU: {
+            info: "информация",
+            blaBla: "БЛА-БЛА-БЛА БЛА-БЛА-БЛА БЛА-БЛА-БЛА БЛА-БЛА-БЛА",
+            backBut: "назад"
+        },
+        EN: {
+            info: "information",
+            blaBla: "BLA-BLA BLA-BLA BLA-BLA BLA-BLA BLA-BLA BLA-BLA",
+            backBut: "back"
+        }
+    }
+
+    const selectedText = useSelectLanguage(languageText, props.selectedLanguage)
+
+    const { backBut, info, blaBla } = selectedText
+
     return (
         <>
-            <div className="heading">INFORMATION</div>
+            <div className="heading">{info}</div>
             <div className="informationPage-body">
-                <div className="informationPage-info">
-                    BLA-BLA BLA-BLA BLA-BLA BLA-BLA BLA-BLA BLA-BLA BLA-BLA BLA-BLA BLA-BLA BLA-BLA BLA-BLA BLA-BLA
-                </div>
-                <Link to="/">
-                    <button className="backButton">BACK</button>
+                <div className="informationPage-info">{blaBla}</div>
+                <Link to={props.prevUrlSupportPage}>
+                    <button className="backButton">{backBut}</button>
                 </Link>
             </div>
         </>
     )
 }
 
-export default connect(null, null)(InformationPage)
+const mapStateToProps = (state: RootStateOrAny) => ({
+    prevUrlSupportPage: state.generalState.prevUrlSupportPage,
+    selectedLanguage: state.generalState.selectedLanguage
+})
+
+export default connect(mapStateToProps, {})(InformationPage)

@@ -14,7 +14,6 @@ import ProfilePage from './profilePage/ProfilePage'
 
 type PropsType = {
     setRandomBusySeats: (arg0: number[]) => void
-    // history: History
 }
 
 class App extends React.Component<PropsType> {

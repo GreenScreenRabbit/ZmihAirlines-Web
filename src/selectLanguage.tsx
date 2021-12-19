@@ -15,7 +15,8 @@ import { LanguageType } from './languageType'
 export function useSelectLanguage<T>(
     objLanguages: { [keyof in LanguageType]: T },
     selectedLanguage: LanguageType
-): [T, () => void] {
+): T {
+    
     const objLanguagesCopy = Object.assign(objLanguages)
 
     const [languageForRerurn, setLanguageForRerurn] = useState<T>(objLanguagesCopy.EN)
@@ -30,8 +31,8 @@ export function useSelectLanguage<T>(
     }
     useEffect(() => {
         changeLanguage()
-    })
-    return [languageForRerurn, changeLanguage]
+    },[selectedLanguage])
+    return languageForRerurn
 }
 
 export function selectLanguage<T>(objLanguages: { [keyof in LanguageType]: T }, selectedLanguage: LanguageType): T {

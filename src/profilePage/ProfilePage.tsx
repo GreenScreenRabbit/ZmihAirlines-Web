@@ -1,29 +1,66 @@
-import { useState } from 'react'
-import { connect, RootStateOrAny } from 'react-redux'
-import { actions } from '../actions and const/actions'
-import { TicketType } from '../chainOrderPage/chainOrderType'
-import './profilePage.css'
+import { useState } from "react"
+import { connect, RootStateOrAny } from "react-redux"
+import { actions } from "../actions and const/actions"
+import { TicketType } from "../chainOrderPage/chainOrderType"
+import { LanguageType } from "../languageType"
+import { useSelectLanguage } from "../selectLanguage"
+import "./profilePage.css"
 
 type PropsType = {
-    logined?: boolean
+    logined: boolean
     setLogIn: (arg0: boolean) => void
     ticket: TicketType
+    selectedLanguage: LanguageType
 }
 
 const ProfilePage = (props: PropsType) => {
-    const [loginSingIn, setLoginSingIn] = useState<string>('log123')
-    const [passwordSingIn, setPasswordSingIn] = useState<string>('123')
+    const [loginSingIn, setLoginSingIn] = useState<string>("log123")
+    const [passwordSingIn, setPasswordSingIn] = useState<string>("123")
 
-    const { firstName, lastName, sex, price, selectedBagage, selectedSeat, data, fromAirName, toAirName } = props.ticket
+    const languageText = {
+        RU: {
+            hello: "Привет",
+            urTicket: "Ваш билет",
+            from: "Из",
+            to: "В",
+            firstName: "Имя",
+            lastName: "Фамилия",
+            sex: "Пол",
+            price: "Цена",
+            selectedBagage: "Выбраный багаж",
+            selectedSeat: "Выбраное место",
+            data: "Время",
+            someone: "кто-то",
+            dontHaveTicket: "Вы еще не купили билет",
+            exit: "выйти",
+        },
+        EN: {
+            hello: "hello",
+            urTicket: "urTicket",
+            from: "from",
+            to: "to",
+            firstName: "first name",
+            lastName: "last name",
+            sex: "sex",
+            price: "price",
+            selectedBagage: "selected bagage",
+            selectedSeat: "selected seat",
+            data: "data",
+            someone: "someone",
+            dontHaveTicket: "you don't have a ticket now",
+            exit: "exit",
+            
+        }
+    }
 
-    console.log('props.ticket')
-    console.log(props.ticket)
+    const selectedLanguage = useSelectLanguage(languageText, props.selectedLanguage)
+
 
     const checkSingIn = () => {
-        if (passwordSingIn == '123' && loginSingIn == 'log123') {
+        if (passwordSingIn == "123" && loginSingIn == "log123") {
             props.setLogIn(true)
         } else {
-            alert('login: log123 ,password: 123')
+            alert("login: log123 ,password: 123")
         }
     }
 
@@ -31,33 +68,51 @@ const ProfilePage = (props: PropsType) => {
         <>
             {props.logined ? (
                 <div className="profilePage-body">
-                    <div className="profilePage-wellcomeText">Hello {firstName ? firstName : "someone"}</div>
+                    <div className="profilePage-wellcomeText">
+                        {selectedLanguage.hello}, {props.ticket ? props.ticket.firstName : selectedLanguage.someone}
+                    </div>
                     <div className="profilePage-ticketPliceContainer">
-                        <div className="profilePage-ticketText">Ur ticket</div>
+                        <div className="profilePage-ticketText">{selectedLanguage.urTicket}</div>
                         {props.ticket ? (
                             <div className="profilePage-ticket">
-                                <div className="profilePage-ticketText-field">firstName: {firstName}</div>
-                                <div className="profilePage-ticketText-field">lastName: {lastName}</div>
-                                <div className="profilePage-ticketText-field">sex: {sex}</div>
-                                <div className="profilePage-ticketText-field">price: {price}</div>
-                                <div className="profilePage-ticketText-field">selectedBagage: {selectedBagage}</div>
-                                <div className="profilePage-ticketText-field">selectedSeat: {selectedSeat}</div>
+                                <div className="profilePage-ticketText-field">
+                                    {selectedLanguage.firstName}: {props.ticket.firstName}
+                                </div>
+                                <div className="profilePage-ticketText-field">
+                                    {selectedLanguage.firstName}: {props.ticket.lastName}
+                                </div>
+                                <div className="profilePage-ticketText-field">
+                                    {selectedLanguage.sex}: {props.ticket.sex}
+                                </div>
+                                <div className="profilePage-ticketText-field">
+                                    {selectedLanguage.price}: {props.ticket.price}
+                                </div>
+                                <div className="profilePage-ticketText-field">
+                                    {selectedLanguage.selectedBagage}: {props.ticket.selectedBagage}
+                                </div>
+                                <div className="profilePage-ticketText-field">
+                                    {selectedLanguage.selectedSeat}: {props.ticket.selectedSeat}
+                                </div>
                                 <div className="profilePage-ticketText-container">
-                                    <div className="profilePage-ticketText-data">Data: {data.day}</div>
+                                    <div className="profilePage-ticketText-data">
+                                        {selectedLanguage.data}: {props.ticket.data.day} / {props.ticket.data.month}/ {props.ticket.data.year}
+                                    </div>
                                     <div className="profilePage-ticketText-fromToContainer">
-                                        <div className="profilePage-ticketText-from">From: {fromAirName}</div>
+                                        <div className="profilePage-ticketText-from">
+                                            {selectedLanguage.from}: {props.ticket.fromAirName}
+                                        </div>
                                         <div className="profilePage-ticketText-to">
-                                            To: {toAirName}
-                                            </div>
+                                            {selectedLanguage.to}: {props.ticket.toAirName}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         ) : (
-                            <div className="profilePage-unTicket">you don't have a ticket now</div>
+                            <div className="profilePage-unTicket">{selectedLanguage.dontHaveTicket}</div>
                         )}
                     </div>
                     <button className="profilePage-exitBut" onClick={() => props.setLogIn(false)}>
-                        EXIT
+                        {selectedLanguage.exit}
                     </button>
                 </div>
             ) : (
@@ -90,7 +145,8 @@ const ProfilePage = (props: PropsType) => {
 
 let mapStateToProps = (state: RootStateOrAny) => ({
     logined: state.generalState.logined,
-    ticket: state.generalState.ticket
+    ticket: state.generalState.ticket,
+    selectedLanguage: state.generalState.selectedLanguage
 })
 
 export default connect(mapStateToProps, { setLogIn: actions.setLogIn })(ProfilePage)
