@@ -24,7 +24,6 @@ export function useSelectLanguage<T>(
     const changeLanguage = () => {
         for (let language of Object.keys(objLanguagesCopy)) {
             if (language == selectedLanguage) {
-                // return objLanguages[language]
                 setLanguageForRerurn(objLanguagesCopy[language])
             }
         }
